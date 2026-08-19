@@ -1,5 +1,26 @@
 import { useEffect, useRef, useState } from 'react'
-import { Drawer, DrawerHeader, Group, GroupCard, GroupField, SegmentButton, Segmented } from './drawer.styled'
+import { Keys, Shortcuts } from './SessionDialog.styled'
+import {
+  ThemeDescription,
+  ThemeGrid,
+  ThemeName,
+  ThemeOption,
+  ThemePreview,
+  ThemeSwatch,
+} from './SettingsDialog.styled'
+import {
+  ButtonRow,
+  Divider,
+  Drawer,
+  DrawerHeader,
+  Group,
+  GroupCard,
+  GroupField,
+  OutlineButton,
+  SegmentButton,
+  Segmented,
+  Switch,
+} from './drawer.styled'
 import { IconButton } from './buttons.styled'
 import { ChevronLeft, History, Keyboard, X } from 'lucide-react'
 import type { Session } from '@/lib/session'
@@ -86,18 +107,18 @@ export function SettingsDialog({
       {page === 'shortcuts' ? (
         <>
           {header('Shortcuts', () => setPage('main'))}
-          <ul className="shortcut-list">
+          <Shortcuts>
             {shortcuts.map((shortcut) => (
               <li key={shortcut.label}>
                 <span>{shortcut.label}</span>
-                <span className="shortcut-keys">
+                <Keys>
                   {shortcut.keys.map((key) => (
                     <kbd key={key}>{key}</kbd>
                   ))}
-                </span>
+                </Keys>
               </li>
             ))}
-          </ul>
+          </Shortcuts>
         </>
       ) : (
         <>
@@ -152,9 +173,9 @@ export function SettingsDialog({
 
           {/* A row rather than a titled group: the label on the switch says the whole
               thing, so a heading above it would only repeat itself. */}
-          <Group as="div" $row className="switch-row">
+          <Group as="div" $row>
             <label htmlFor="sound">Chime at zero</label>
-            <input
+            <Switch
               id="sound"
               type="checkbox"
               role="switch"
@@ -165,28 +186,26 @@ export function SettingsDialog({
 
           {/* Everything above changes what is counted; everything below changes how it
               looks. The rule keeps the two from reading as one long list. */}
-          <hr className="settings-divider" />
+          <Divider />
 
           <Group>
             <legend>Theme</legend>
-            <div className="theme-grid">
+            <ThemeGrid>
               {themes.map((t) => (
-                <button
+                <ThemeOption
                   key={t.id}
-                  className={`theme-option${t.id === settings.themeId ? ' is-active' : ''}`}
+                  $active={t.id === settings.themeId}
                   onClick={() => onChange({ ...settings, themeId: t.id })}
                   aria-pressed={t.id === settings.themeId}
                 >
-                  <span
-                    className="theme-swatch"
+                  <ThemeSwatch
                     style={{
                       backgroundColor: t.base,
                       backgroundImage: `url(${scenePoster(t.id, 'landscape')})`,
                       borderColor: t.border,
                     }}
                   >
-                    <span
-                      className="theme-preview"
+                    <ThemePreview
                       style={{
                         fontFamily: t.displayFont,
                         fontWeight: t.displayWeight,
@@ -195,24 +214,21 @@ export function SettingsDialog({
                       }}
                     >
                       {sample}
-                    </span>
-                  </span>
-                  <span className="theme-name">{t.name}</span>
-                  <span className="theme-description">{t.description}</span>
-                </button>
+                    </ThemePreview>
+                  </ThemeSwatch>
+                  <ThemeName>{t.name}</ThemeName>
+                  <ThemeDescription>{t.description}</ThemeDescription>
+                </ThemeOption>
               ))}
 
               {/* The custom tile previews whatever it is currently set to, so the grid
                   shows eight backgrounds rather than seven and a placeholder. */}
-              <button
-                className={`theme-option${
-                  settings.themeId === CUSTOM_THEME_ID ? ' is-active' : ''
-                }`}
+              <ThemeOption
+                $active={settings.themeId === CUSTOM_THEME_ID}
                 onClick={() => onChange({ ...settings, themeId: CUSTOM_THEME_ID })}
                 aria-pressed={settings.themeId === CUSTOM_THEME_ID}
               >
-                <span
-                  className="theme-swatch"
+                <ThemeSwatch
                   style={
                     settings.customKind === 'image' && customImage
                       ? {
@@ -226,8 +242,7 @@ export function SettingsDialog({
                         }
                   }
                 >
-                  <span
-                    className="theme-preview"
+                  <ThemePreview
                     style={{
                       fontFamily: gradientById(settings.customGradientId).displayFont,
                       fontWeight: gradientById(settings.customGradientId).displayWeight,
@@ -240,12 +255,12 @@ export function SettingsDialog({
                     }}
                   >
                     {sample}
-                  </span>
-                </span>
-                <span className="theme-name">Custom</span>
-                <span className="theme-description">Your own background.</span>
-              </button>
-            </div>
+                  </ThemePreview>
+                </ThemeSwatch>
+                <ThemeName>Custom</ThemeName>
+                <ThemeDescription>Your own background.</ThemeDescription>
+              </ThemeOption>
+            </ThemeGrid>
 
             {settings.themeId === CUSTOM_THEME_ID && (
               <GroupCard>
@@ -259,23 +274,23 @@ export function SettingsDialog({
             )}
           </Group>
 
-          <hr className="settings-divider" />
+          <Divider />
 
           <Group>
             <legend>History and backup</legend>
-            <div className="button-grid">
-              <button className="outline-button" onClick={onOpenSession}>
+            <ButtonRow>
+              <OutlineButton onClick={onOpenSession}>
                 <History size={15} aria-hidden="true" />
                 Past runs
-              </button>
+              </OutlineButton>
               {/* A shortcut list is no use without a keyboard to press. */}
               {hasKeyboard && (
-                <button className="outline-button" onClick={() => setPage('shortcuts')}>
+                <OutlineButton onClick={() => setPage('shortcuts')}>
                   <Keyboard size={15} aria-hidden="true" />
                   Shortcuts
-                </button>
+                </OutlineButton>
               )}
-            </div>
+            </ButtonRow>
             <BackupControls settings={settings} session={session} onRestore={onRestore} />
           </Group>
         </>

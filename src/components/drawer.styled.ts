@@ -107,7 +107,12 @@ export const Group = styled.fieldset<{ $row?: boolean }>`
   ${(props) =>
     props.$row &&
     `
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
     min-height: 40px;
+    font-size: 14px;
 
     & > label {
       padding-left: 1px;
@@ -191,4 +196,169 @@ export const GroupField = styled.div<{ $wrap?: boolean; $between?: boolean }>`
   input::placeholder {
     color: var(--dim);
   }
+`
+
+export const Divider = styled.hr`
+  height: 0;
+  /* Matches the group spacing it collapses against, so the gaps above and below it stay
+     equal. */
+  margin: var(--gap-block) 0;
+  border: 0;
+  border-top: 1px solid var(--line);
+`
+
+/** A pill for a preset value: a duration, a scene. */
+export const Chip = styled.button<{ $active?: boolean }>`
+  padding: 7px 12px;
+  font: inherit;
+  font-size: 13px;
+  color: ${(props) => (props.$active ? 'var(--text)' : 'var(--dim)')};
+  background: ${(props) =>
+    props.$active ? 'color-mix(in srgb, var(--text) 12%, transparent)' : 'transparent'};
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--text);
+  }
+`
+
+/** The switch itself, drawn from a checkbox so it keeps the control's own behaviour. */
+export const Switch = styled.input`
+  position: relative;
+  width: 44px;
+  height: 26px;
+  margin: 0;
+  appearance: none;
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 150ms ease;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 3px;
+    width: 18px;
+    height: 18px;
+    background: var(--text);
+    border-radius: 50%;
+    opacity: 0.55;
+    transform: translateY(-50%);
+    transition:
+      left 150ms ease,
+      opacity 150ms ease;
+  }
+
+  &:checked {
+    background: color-mix(in srgb, var(--text) 20%, transparent);
+  }
+
+  &:checked::after {
+    left: 21px;
+    opacity: 1;
+  }
+`
+
+export const ButtonRow = styled.div`
+  display: flex;
+  gap: var(--gap-row);
+`
+
+export const OutlineButton = styled.button`
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  /* Actions were 16px-tall links, well under a comfortable touch target. */
+  min-height: 40px;
+  padding: 11px 12px;
+  font: inherit;
+  font-size: 14px;
+  color: var(--text);
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  cursor: pointer;
+
+  &:hover {
+    background: color-mix(in srgb, var(--text) 8%, transparent);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: default;
+  }
+`
+
+export const LinkButton = styled.button<{ $danger?: boolean }>`
+  padding: 0 0 0 1px;
+  font: inherit;
+  font-size: 13px;
+  color: var(--dim);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  background: none;
+  border: 0;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--text);
+  }
+
+  ${(props) =>
+    props.$danger &&
+    `
+    display: block;
+    margin: var(--gap-block) auto 0;
+    text-align: center;
+  `}
+`
+
+/** `$inset` lines the hint up with a card's own padding rather than the drawer's. */
+export const Hint = styled.p<{ $error?: boolean; $inset?: boolean }>`
+  margin: 0;
+  padding-left: 1px;
+  font-size: 12px;
+  line-height: 1.4;
+  color: ${(props) => (props.$error ? 'var(--text)' : 'var(--dim)')};
+  ${(props) => props.$inset && 'padding: 0 12px 10px;'}
+`
+
+export const OptionsCount = styled.p`
+  margin: 0 0 var(--gap-row);
+  padding-left: 1px;
+  font-size: 13px;
+  color: var(--dim);
+`
+
+/** A list of rows separated by hairlines, closed off at the bottom. */
+export const RuledList = styled.ul`
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    display: flex;
+    gap: 12px;
+    border-top: 1px solid var(--line);
+  }
+
+  li:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+`
+
+/** Present to a screen reader, absent to everyone else — file inputs, mostly. */
+export const VisuallyHidden = styled.input`
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 `

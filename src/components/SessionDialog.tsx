@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
-import { Drawer, DrawerHeader } from './drawer.styled'
+import { DayGroup, DayLabel, RunMeta, RunValue, Runs } from './SessionDialog.styled'
+import { Drawer, DrawerHeader, Hint, LinkButton, OptionsCount } from './drawer.styled'
 import { IconButton } from './buttons.styled'
 import { X } from 'lucide-react'
 import { formatSpan } from '@/lib/duration'
@@ -44,23 +45,23 @@ export function SessionDialog({ open, onClose, session, onClear }: SessionDialog
       </DrawerHeader>
 
       {days.length === 0 ? (
-        <p className="settings-hint">Nothing counted yet. Timers you run will collect here.</p>
+        <Hint>Nothing counted yet. Timers you run will collect here.</Hint>
       ) : (
         <>
-          <p className="options-count">
+          <OptionsCount>
             {session.entries.length} {session.entries.length === 1 ? 'run' : 'runs'}
             {/* The total is what the history is actually for: how much time went where. */}
             {finished > 0 && ` · ${formatSpan(finished)} finished`}
-          </p>
+          </OptionsCount>
 
           {days.map((day) => (
-            <section key={day.label} className="session-day">
-              <h3 className="session-day-label">{day.label}</h3>
-              <ul className="session-list">
+            <DayGroup key={day.label}>
+              <DayLabel>{day.label}</DayLabel>
+              <Runs>
                 {day.entries.map((entry) => (
                   <li key={`${entry.at}-${entry.label}`}>
-                    <span className="session-value">{entry.label}</span>
-                    <span className="session-meta">
+                    <RunValue>{entry.label}</RunValue>
+                    <RunMeta>
                       {/* A run that was cut short is a different fact from one that
                           finished, and the list is misleading if it says otherwise. */}
                       <span>
@@ -76,18 +77,18 @@ export function SessionDialog({ open, onClose, session, onClear }: SessionDialog
                           minute: '2-digit',
                         })}
                       </time>
-                    </span>
+                    </RunMeta>
                   </li>
                 ))}
-              </ul>
-            </section>
+              </Runs>
+            </DayGroup>
           ))}
 
           {/* Quiet by default: it destroys the history, so it should not compete with
               reading the list. */}
-          <button className="link-button is-danger" onClick={onClear}>
+          <LinkButton $danger onClick={onClear}>
             Clear history
-          </button>
+          </LinkButton>
         </>
       )}
     </Drawer>

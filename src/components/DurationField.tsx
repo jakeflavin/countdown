@@ -1,5 +1,5 @@
 import { clampDuration, DAY, partsToMs, splitParts } from '@/lib/duration'
-import { GroupField } from './drawer.styled'
+import { Chip, GroupField, Hint } from './drawer.styled'
 import { presets } from '@/lib/presets'
 
 type DurationFieldProps = {
@@ -48,22 +48,22 @@ export function DurationField({ ms, onChange }: DurationFieldProps) {
 
       <GroupField $wrap>
         {presets.map((preset) => (
-          <button
+          <Chip
             key={preset.label}
-            className={`chip${preset.ms === ms ? ' is-active' : ''}`}
+            $active={preset.ms === ms}
             onClick={() => onChange(preset.ms)}
             aria-pressed={preset.ms === ms}
           >
             {preset.label}
-          </button>
+          </Chip>
         ))}
       </GroupField>
 
       {ms >= DAY && (
-        <p className="settings-hint">
+        <Hint>
           Over a day. Date mode may read better at this length — it counts to a moment on the
           calendar rather than to the end of a run you start.
-        </p>
+        </Hint>
       )}
     </>
   )

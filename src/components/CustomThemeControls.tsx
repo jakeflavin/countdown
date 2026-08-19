@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react'
-import { GroupField, SegmentButton, Segmented } from './drawer.styled'
+import { GradientOption, ImageThumb } from './SettingsDialog.styled'
+import { GroupField, Hint, OutlineButton, SegmentButton, Segmented, VisuallyHidden } from './drawer.styled'
 import { IconButton } from './buttons.styled'
 import { ImagePlus, Trash2 } from 'lucide-react'
 import { gradients } from '@/lib/gradients'
@@ -71,11 +72,9 @@ export function CustomThemeControls({
       {settings.customKind === 'gradient' ? (
         <GroupField $wrap>
           {gradients.map((gradient) => (
-            <button
+            <GradientOption
               key={gradient.id}
-              className={`gradient-option${
-                settings.customGradientId === gradient.id ? ' is-active' : ''
-              }`}
+              $active={settings.customGradientId === gradient.id}
               style={{ background: gradient.background }}
               onClick={() => onChange({ ...settings, customGradientId: gradient.id })}
               aria-pressed={settings.customGradientId === gradient.id}
@@ -88,20 +87,18 @@ export function CustomThemeControls({
         <>
           <GroupField $wrap>
             {image && (
-              <span
-                className="image-thumb"
+              <ImageThumb
                 style={{ backgroundImage: `url(${image.dataUrl})` }}
                 aria-hidden="true"
               />
             )}
-            <button
-              className="outline-button"
+            <OutlineButton
               onClick={() => fileRef.current?.click()}
               disabled={working}
             >
               <ImagePlus size={15} aria-hidden="true" />
               {working ? 'Working…' : image ? 'Replace' : 'Choose image'}
-            </button>
+            </OutlineButton>
             {image && (
               <IconButton
                 $quiet
@@ -114,25 +111,24 @@ export function CustomThemeControls({
                 <Trash2 size={16} />
               </IconButton>
             )}
-            <input
+            <VisuallyHidden
               ref={fileRef}
-              className="visually-hidden"
-              type="file"
+                  type="file"
               accept="image/*"
               onChange={(e) => onFile(e.target.files?.[0])}
             />
           </GroupField>
 
           {!image && !status && (
-            <p className="settings-hint is-inset">
+            <Hint $inset>
               Pictures stay on this device. A shared link carries the gradient instead.
-            </p>
+            </Hint>
           )}
         </>
       )}
 
       {status && (
-        <p className={`settings-hint is-inset${status.error ? ' is-error' : ''}`}>{status.text}</p>
+        <Hint $inset $error={status.error}>{status.text}</Hint>
       )}
     </>
   )
