@@ -19,7 +19,12 @@ export type Gradient = {
   displayTracking: string
 }
 
-export const gradients: Gradient[] = [
+/**
+ * Typed as non-empty so the default below is a Gradient rather than a maybe. Indexed reads
+ * are checked, and "there is always at least one gradient" is a real invariant of this
+ * list — better stated in the type than asserted at each use.
+ */
+export const gradients: [Gradient, ...Gradient[]] = [
   {
     id: 'noir',
     name: 'Noir',

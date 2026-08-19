@@ -58,9 +58,11 @@ function averageColour(image: HTMLImageElement) {
   let g = 0
   let b = 0
   for (let i = 0; i < data.length; i += 4) {
-    r += data[i]
-    g += data[i + 1]
-    b += data[i + 2]
+    // getImageData always returns RGBA, so the stride keeps every read in range; the
+    // fallbacks are what the checker wants to see, not a behaviour change.
+    r += data[i] ?? 0
+    g += data[i + 1] ?? 0
+    b += data[i + 2] ?? 0
   }
   const pixels = data.length / 4
   r = Math.round(r / pixels)
