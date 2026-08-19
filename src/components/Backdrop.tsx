@@ -5,7 +5,7 @@ import {
   type Backdrop as BackdropChoice,
   type Orientation,
   type Theme,
-} from '../themes'
+} from '../lib/themes'
 
 /** The clip that fits the screen it is on: a phone held upright gets a scene framed for
  *  it, rather than the middle of a wide one blown up. */

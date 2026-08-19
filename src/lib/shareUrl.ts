@@ -2,7 +2,7 @@ import { clampDuration } from './duration'
 import { defaultGradient, gradients } from './gradients'
 import { CUSTOM_THEME_ID, themes } from './themes'
 // Type-only, so this module and useSettings do not form a runtime import cycle.
-import type { Mode, Settings } from './useSettings'
+import type { Mode, Settings } from '../hooks/useSettings'
 
 /**
  * A link carries the setup, not the progress: the point of sharing a duration is "here

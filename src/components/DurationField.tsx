@@ -1,5 +1,5 @@
-import { clampDuration, DAY, partsToMs, splitParts } from '../duration'
-import { presets } from '../presets'
+import { clampDuration, DAY, partsToMs, splitParts } from '../lib/duration'
+import { presets } from '../lib/presets'
 
 type Props = {
   ms: number

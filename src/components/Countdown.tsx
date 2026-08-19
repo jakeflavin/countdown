@@ -1,9 +1,9 @@
 import { useEffect, type ReactNode } from 'react'
 import { RotateCcw } from 'lucide-react'
-import { isDrawerOpen, isTypingTarget, targetElement } from '../shortcuts'
-import type { Theme } from '../themes'
-import type { TimerStatus } from '../timer'
-import type { Mode } from '../useSettings'
+import { isDrawerOpen, isTypingTarget, targetElement } from '../lib/shortcuts'
+import type { Theme } from '../lib/themes'
+import type { TimerStatus } from '../lib/timer'
+import type { Mode } from '../hooks/useSettings'
 import { TimeDisplay } from './TimeDisplay'
 
 type Props = {

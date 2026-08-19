@@ -1,7 +1,7 @@
 import type { CSSProperties } from 'react'
-import { formatClock, splitParts } from '../duration'
-import type { Theme } from '../themes'
-import type { Mode } from '../useSettings'
+import { formatClock, splitParts } from '../lib/duration'
+import type { Theme } from '../lib/themes'
+import type { Mode } from '../hooks/useSettings'
 
 type Props = {
   mode: Mode

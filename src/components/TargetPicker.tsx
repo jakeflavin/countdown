@@ -7,7 +7,7 @@ import {
   prefers12Hour,
   sameDay,
   weekdayLabels,
-} from '../calendar'
+} from '../lib/calendar'
 
 type Props = {
   /** The chosen moment, or null while nothing has been picked yet. */

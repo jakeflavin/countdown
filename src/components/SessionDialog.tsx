@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { X } from 'lucide-react'
-import { formatSpan } from '../duration'
-import { completedMs, groupByDay, type Session } from '../session'
+import { formatSpan } from '../lib/duration'
+import { completedMs, groupByDay, type Session } from '../lib/session'
 
 type Props = {
   open: boolean

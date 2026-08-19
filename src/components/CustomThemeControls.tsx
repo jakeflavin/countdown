@@ -1,9 +1,9 @@
 import { useRef, useState } from 'react'
 import { ImagePlus, Trash2 } from 'lucide-react'
-import { gradients } from '../gradients'
-import { ImageError, processImage, type CustomImage } from '../customBackground'
-import type { CustomKind } from '../themes'
-import type { Settings } from '../useSettings'
+import { gradients } from '../lib/gradients'
+import { ImageError, processImage, type CustomImage } from '../lib/customBackground'
+import type { CustomKind } from '../lib/themes'
+import type { Settings } from '../hooks/useSettings'
 
 type Props = {
   settings: Settings
