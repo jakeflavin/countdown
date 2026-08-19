@@ -165,11 +165,11 @@ export default function App() {
 
   useEffect(() => {
     const root = document.documentElement
-    root.style.setProperty('--base', theme.base)
+    root.style.setProperty('--bg', theme.base)
     root.style.setProperty('--text', theme.text)
-    root.style.setProperty('--muted', theme.muted)
+    root.style.setProperty('--dim', theme.muted)
     root.style.setProperty('--surface', theme.surface)
-    root.style.setProperty('--border', theme.border)
+    root.style.setProperty('--line', theme.border)
   }, [theme])
 
   const onToggle = useCallback(() => {

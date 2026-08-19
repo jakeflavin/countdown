@@ -19,7 +19,7 @@ body {
   color: var(--text);
   /* The scene's own average color, so the moment before the video paints is the scene's
      color rather than white. */
-  background: var(--base);
+  background: var(--bg);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -30,7 +30,7 @@ body {
   inset: 0;
   z-index: 0;
   overflow: hidden;
-  background: var(--base);
+  background: var(--bg);
 }
 
 .scene-video,
@@ -114,7 +114,7 @@ body {
   margin: 0;
   font-size: 12px;
   font-weight: 500;
-  color: var(--muted);
+  color: var(--dim);
   letter-spacing: 0.14em;
   text-transform: uppercase;
   text-align: center;
@@ -158,7 +158,7 @@ body {
 .segment-unit {
   font-size: 11px;
   font-weight: 500;
-  color: var(--muted);
+  color: var(--dim);
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
@@ -218,7 +218,7 @@ body {
   font-weight: 500;
   color: var(--text);
   background: var(--surface);
-  border: 1px solid var(--border);
+  border: 1px solid var(--line);
   border-radius: 999px;
   cursor: pointer;
   backdrop-filter: blur(12px);
@@ -275,7 +275,7 @@ body {
   height: 40px;
   color: var(--text);
   background: var(--surface);
-  border: 1px solid var(--border);
+  border: 1px solid var(--line);
   border-radius: 999px;
   cursor: pointer;
   backdrop-filter: blur(12px);
@@ -311,7 +311,7 @@ body {
   overflow-y: auto;
   color: var(--text);
   background: var(--surface);
-  border: 1px solid var(--border);
+  border: 1px solid var(--line);
   border-radius: 20px;
   backdrop-filter: blur(20px);
 }
@@ -382,7 +382,7 @@ body {
 .settings-group legend {
   padding: 0 0 0 1px;
   font-size: 13px;
-  color: var(--muted);
+  color: var(--dim);
 }
 
 /* Two modes, side by side, so the one that is not chosen is still visible. */
@@ -390,7 +390,7 @@ body {
   display: flex;
   gap: 4px;
   padding: 4px;
-  border: 1px solid var(--border);
+  border: 1px solid var(--line);
   border-radius: 12px;
 }
 
@@ -399,7 +399,7 @@ body {
   padding: 9px 12px;
   font: inherit;
   font-size: 14px;
-  color: var(--muted);
+  color: var(--dim);
   background: transparent;
   border: 0;
   border-radius: 8px;
@@ -414,7 +414,7 @@ body {
 /* A card: the mode above names it, the rows within configure it. */
 .group-card {
   overflow: hidden;
-  border: 1px solid var(--border);
+  border: 1px solid var(--line);
   border-radius: 12px;
 }
 
@@ -424,7 +424,7 @@ body {
   align-items: center;
   gap: 12px;
   padding: 10px 12px;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--line);
 }
 
 /* The first row sits directly under the card's edge, which is a border already. */
@@ -439,7 +439,7 @@ body {
   flex-direction: column;
   gap: 5px;
   font-size: 12px;
-  color: var(--muted);
+  color: var(--dim);
 }
 
 .group-field input {
@@ -450,7 +450,7 @@ body {
   font-size: 14px;
   color: var(--text);
   background: transparent;
-  border: 1px solid var(--border);
+  border: 1px solid var(--line);
   border-radius: 8px;
 }
 
@@ -460,7 +460,7 @@ body {
 }
 
 .group-field input::placeholder {
-  color: var(--muted);
+  color: var(--dim);
 }
 
 /* A month at a time, inside the card that names what it is for. */
@@ -490,9 +490,9 @@ body {
   width: 30px;
   height: 30px;
   padding: 0;
-  color: var(--muted);
+  color: var(--dim);
   background: transparent;
-  border: 1px solid var(--border);
+  border: 1px solid var(--line);
   border-radius: 999px;
   cursor: pointer;
   transition: transform 120ms ease, color 120ms ease, background 120ms ease;
@@ -521,7 +521,7 @@ body {
 .calendar-weekday {
   padding-bottom: 4px;
   font-size: 11px;
-  color: var(--muted);
+  color: var(--dim);
   text-align: center;
   /* Three-letter names in some locales, two in others; the column sets the width. */
   overflow: hidden;
@@ -549,14 +549,14 @@ body {
 /* Today is a fact about the calendar; the selection is a choice. They have to be
    distinguishable when they are the same square, so one is a ring and one is a fill. */
 .calendar-day.is-today {
-  box-shadow: inset 0 0 0 1px var(--border);
+  box-shadow: inset 0 0 0 1px var(--line);
 }
 
 /* The number reads against the fill because it is painted in the scene's own base
    colour, which is opaque. The surface is translucent by design — over a light fill it
    let the scene through and left the date washed out and hard to read. */
 .calendar-day.is-selected {
-  color: var(--base);
+  color: var(--bg);
   font-weight: 600;
   background: var(--text);
 }
@@ -584,7 +584,7 @@ body {
   color: var(--text);
   appearance: none;
   background: transparent;
-  border: 1px solid var(--border);
+  border: 1px solid var(--line);
   border-radius: 8px;
   cursor: pointer;
 }
@@ -595,7 +595,7 @@ body {
 }
 
 .time-colon {
-  color: var(--muted);
+  color: var(--dim);
 }
 
 /* The popup list is drawn by the OS, so its options need a readable background of
@@ -616,9 +616,9 @@ body {
   padding: 7px 12px;
   font: inherit;
   font-size: 13px;
-  color: var(--muted);
+  color: var(--dim);
   background: transparent;
-  border: 1px solid var(--border);
+  border: 1px solid var(--line);
   border-radius: 999px;
   cursor: pointer;
 }
@@ -638,7 +638,7 @@ body {
      equal. */
   margin: var(--gap-block) 0;
   border: 0;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--line);
 }
 
 .switch-row {
@@ -668,7 +668,7 @@ body {
   margin: 0;
   appearance: none;
   background: transparent;
-  border: 1px solid var(--border);
+  border: 1px solid var(--line);
   border-radius: 999px;
   cursor: pointer;
   transition: background 150ms ease;
@@ -712,7 +712,7 @@ body {
   color: var(--text);
   text-align: left;
   background: transparent;
-  border: 1px solid var(--border);
+  border: 1px solid var(--line);
   border-radius: 12px;
   cursor: pointer;
 }
@@ -740,7 +740,7 @@ body {
 .theme-description {
   font-size: 11px;
   line-height: 1.3;
-  color: var(--muted);
+  color: var(--dim);
 }
 
 .theme-preview {
@@ -777,7 +777,7 @@ body {
   font-size: 14px;
   color: var(--text);
   background: transparent;
-  border: 1px solid var(--border);
+  border: 1px solid var(--line);
   border-radius: 10px;
   cursor: pointer;
 }
@@ -790,7 +790,7 @@ body {
   padding: 0 0 0 1px;
   font: inherit;
   font-size: 13px;
-  color: var(--muted);
+  color: var(--dim);
   text-decoration: underline;
   text-underline-offset: 3px;
   background: none;
@@ -813,7 +813,7 @@ body {
   padding-left: 1px;
   font-size: 12px;
   line-height: 1.4;
-  color: var(--muted);
+  color: var(--dim);
 }
 
 .settings-hint.is-error {
@@ -824,7 +824,7 @@ body {
   margin: 0 0 var(--gap-row);
   padding-left: 1px;
   font-size: 13px;
-  color: var(--muted);
+  color: var(--dim);
 }
 
 .session-day {
@@ -835,7 +835,7 @@ body {
   margin: 0 0 var(--gap-row) 1px;
   font-size: 13px;
   font-weight: 500;
-  color: var(--muted);
+  color: var(--dim);
 }
 
 .session-list {
@@ -850,11 +850,11 @@ body {
   justify-content: space-between;
   gap: 12px;
   padding: 10px 2px;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--line);
 }
 
 .session-list li:last-child {
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--line);
 }
 
 .session-value {
@@ -866,7 +866,7 @@ body {
   flex: 0 0 auto;
   gap: 10px;
   font-size: 12px;
-  color: var(--muted);
+  color: var(--dim);
 }
 
 .shortcut-list {
@@ -882,11 +882,11 @@ body {
   gap: 12px;
   padding: 11px 2px;
   font-size: 14px;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--line);
 }
 
 .shortcut-list li:last-child {
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--line);
 }
 
 .shortcut-keys {
@@ -899,8 +899,8 @@ body {
   padding: 3px 8px;
   font-family: inherit;
   font-size: 12px;
-  color: var(--muted);
-  border: 1px solid var(--border);
+  color: var(--dim);
+  border: 1px solid var(--line);
   border-radius: 6px;
 }
 
@@ -933,7 +933,7 @@ body {
   min-width: 0;
   height: 34px;
   padding: 0;
-  border: 1px solid var(--border);
+  border: 1px solid var(--line);
   border-radius: 8px;
   cursor: pointer;
 }
@@ -949,7 +949,7 @@ body {
   height: 34px;
   background-position: center;
   background-size: cover;
-  border: 1px solid var(--border);
+  border: 1px solid var(--line);
   border-radius: 8px;
 }
 
@@ -964,7 +964,7 @@ body {
 .icon-button.is-quiet {
   width: 34px;
   height: 34px;
-  color: var(--muted);
+  color: var(--dim);
   background: transparent;
   backdrop-filter: none;
 }
