@@ -3,9 +3,32 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="theme-color" content="#0d0d11" />
+
+    <!-- iOS reads its own tags rather than the manifest, and ignores an SVG icon. -->
+    <link rel="apple-touch-icon" href="/icon-180.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Countdown</title>
     <meta name="description" content="A simple countdown timer." />
+
+    <!-- Link previews. The image is the app's own cover shot, served from the directory
+         that hosts it; crawlers need an absolute URL and will not follow a relative one. -->
+    <meta property="og:title" content="Countdown" />
+    <meta property="og:description" content="A simple countdown timer." />
+    <meta property="og:site_name" content="Jake's Portfolio" />
+    <meta property="og:image" content="https://portfolio-4b9fe.web.app/images/countdown-cover.jpg" />
+    <meta property="og:image:alt" content="Countdown" />
+    <meta property="og:url" content="https://portfolio-4b9fe.web.app/countdown/" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Countdown" />
+    <meta name="twitter:description" content="A simple countdown timer." />
+    <meta name="twitter:image" content="https://portfolio-4b9fe.web.app/images/countdown-cover.jpg" />
+    <meta name="twitter:image:alt" content="Countdown" />
+    <link rel="canonical" href="https://portfolio-4b9fe.web.app/countdown/" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
