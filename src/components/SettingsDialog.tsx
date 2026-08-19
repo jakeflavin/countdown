@@ -11,7 +11,7 @@ import { DurationField } from './DurationField'
 import { TargetPicker } from './TargetPicker'
 import { CustomThemeControls } from './CustomThemeControls'
 
-type Props = {
+type SettingsDialogProps = {
   open: boolean
   /** Which page to land on when opened; the shortcut for help jumps straight in. */
   openTo?: 'main' | 'shortcuts'
@@ -41,7 +41,7 @@ export function SettingsDialog({
   sample,
   customImage,
   onCustomImage,
-}: Props) {
+}: SettingsDialogProps) {
   const ref = useRef<HTMLDialogElement>(null)
   const [page, setPage] = useState<'main' | 'shortcuts'>('main')
   // Touch devices get no shortcut list; there is nothing to press.

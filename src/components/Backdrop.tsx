@@ -46,7 +46,7 @@ function useReducedMotion() {
   return reduced
 }
 
-type Props = {
+type BackdropProps = {
   backdrop: BackdropChoice
   theme: Theme
 }
@@ -77,7 +77,7 @@ function Scene({ id }: { id: string }) {
   )
 }
 
-export function Backdrop({ backdrop, theme }: Props) {
+export function Backdrop({ backdrop, theme }: BackdropProps) {
   return (
     <div className="scene" aria-hidden="true">
       {backdrop.kind === 'scene' ? (

@@ -9,7 +9,7 @@ import {
   weekdayLabels,
 } from '../lib/calendar'
 
-type Props = {
+type TargetPickerProps = {
   /** The chosen moment, or null while nothing has been picked yet. */
   value: number | null
   onChange: (at: number) => void
@@ -19,7 +19,7 @@ type Props = {
  *  a deliberate choice, where midnight reads like a bug. */
 const DEFAULT_HOUR = 9
 
-export function TargetPicker({ value, onChange }: Props) {
+export function TargetPicker({ value, onChange }: TargetPickerProps) {
   const selected = value === null ? null : new Date(value)
   const today = new Date()
 

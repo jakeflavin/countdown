@@ -3,14 +3,14 @@ import { X } from 'lucide-react'
 import { formatSpan } from '../lib/duration'
 import { completedMs, groupByDay, type Session } from '../lib/session'
 
-type Props = {
+type SessionDialogProps = {
   open: boolean
   onClose: () => void
   session: Session
   onClear: () => void
 }
 
-export function SessionDialog({ open, onClose, session, onClear }: Props) {
+export function SessionDialog({ open, onClose, session, onClear }: SessionDialogProps) {
   const ref = useRef<HTMLDialogElement>(null)
 
   useEffect(() => {

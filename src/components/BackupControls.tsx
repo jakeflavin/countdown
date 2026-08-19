@@ -4,13 +4,13 @@ import { BackupError, buildBackup, downloadBackup, parseBackup } from '../lib/ba
 import type { Session } from '../lib/session'
 import type { Settings } from '../hooks/useSettings'
 
-type Props = {
+type BackupControlsProps = {
   settings: Settings
   session: Session
   onRestore: (settings: Settings, session: Session) => void
 }
 
-export function BackupControls({ settings, session, onRestore }: Props) {
+export function BackupControls({ settings, session, onRestore }: BackupControlsProps) {
   const fileRef = useRef<HTMLInputElement>(null)
   const [status, setStatus] = useState<{ text: string; error: boolean } | null>(null)
 

@@ -1,7 +1,7 @@
 import { clampDuration, DAY, partsToMs, splitParts } from '../lib/duration'
 import { presets } from '../lib/presets'
 
-type Props = {
+type DurationFieldProps = {
   ms: number
   onChange: (ms: number) => void
 }
@@ -14,7 +14,7 @@ const fields: Array<{ unit: Unit; label: string; max: number }> = [
   { unit: 'seconds', label: 'Seconds', max: 59 },
 ]
 
-export function DurationField({ ms, onChange }: Props) {
+export function DurationField({ ms, onChange }: DurationFieldProps) {
   const parts = splitParts(ms)
   // Days are not offered as a field — a duration timer that long is a date — so any
   // that exist are shown as the hours they are.

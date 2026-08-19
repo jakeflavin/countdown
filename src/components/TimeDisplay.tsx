@@ -3,7 +3,7 @@ import { formatClock, splitParts } from '../lib/duration'
 import type { Theme } from '../lib/themes'
 import type { Mode } from '../hooks/useSettings'
 
-type Props = {
+type TimeDisplayProps = {
   mode: Mode
   /** Time left, or time since, always as a positive span. */
   ms: number
@@ -34,7 +34,7 @@ function segments(ms: number) {
   return all.slice(first === -1 ? 2 : Math.min(first, 2))
 }
 
-export function TimeDisplay({ mode, ms, past, label, done, theme }: Props) {
+export function TimeDisplay({ mode, ms, past, label, done, theme }: TimeDisplayProps) {
   const font: CSSProperties = {
     fontFamily: theme.displayFont,
     fontWeight: theme.displayWeight,

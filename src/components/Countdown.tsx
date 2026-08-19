@@ -6,7 +6,7 @@ import type { TimerStatus } from '../lib/timer'
 import type { Mode } from '../hooks/useSettings'
 import { TimeDisplay } from './TimeDisplay'
 
-type Props = {
+type CountdownProps = {
   mode: Mode
   /** Time left, or time since a target that has passed. */
   ms: number
@@ -53,7 +53,7 @@ export function Countdown({
   targetLabel,
   onEditTarget,
   tools,
-}: Props) {
+}: CountdownProps) {
   const isDuration = mode === 'duration'
 
   useEffect(() => {

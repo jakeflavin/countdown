@@ -5,7 +5,7 @@ import { ImageError, processImage, type CustomImage } from '../lib/customBackgro
 import type { CustomKind } from '../lib/themes'
 import type { Settings } from '../hooks/useSettings'
 
-type Props = {
+type CustomThemeControlsProps = {
   settings: Settings
   onChange: (next: Settings) => void
   image: CustomImage | null
@@ -17,7 +17,7 @@ const kinds: Array<{ id: CustomKind; name: string }> = [
   { id: 'image', name: 'Image' },
 ]
 
-export function CustomThemeControls({ settings, onChange, image, onImage }: Props) {
+export function CustomThemeControls({ settings, onChange, image, onImage }: CustomThemeControlsProps) {
   const fileRef = useRef<HTMLInputElement>(null)
   const [status, setStatus] = useState<{ text: string; error: boolean } | null>(null)
   const [working, setWorking] = useState(false)
