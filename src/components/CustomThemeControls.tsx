@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react'
+import { IconButton } from './buttons.styled'
 import { ImagePlus, Trash2 } from 'lucide-react'
 import { gradients } from '@/lib/gradients'
 import { ImageError, processImage, type CustomImage } from '@/lib/customBackground'
@@ -101,8 +102,8 @@ export function CustomThemeControls({
               {working ? 'Working…' : image ? 'Replace' : 'Choose image'}
             </button>
             {image && (
-              <button
-                className="icon-button is-quiet"
+              <IconButton
+                $quiet
                 onClick={() => {
                   onImage(null)
                   setStatus(null)
@@ -110,7 +111,7 @@ export function CustomThemeControls({
                 aria-label="Remove image"
               >
                 <Trash2 size={16} />
-              </button>
+              </IconButton>
             )}
             <input
               ref={fileRef}

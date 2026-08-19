@@ -1,4 +1,6 @@
 import { useEffect, type ReactNode } from 'react'
+import { IconButton, PrimaryButton } from './buttons.styled'
+import { StageActions, StagePrimary, StageTools } from './Countdown.styled'
 import { RotateCcw } from 'lucide-react'
 import { isDrawerOpen, isTypingTarget, targetElement } from '@/lib/shortcuts'
 import type { Theme } from '@/lib/themes'
@@ -89,31 +91,31 @@ export function Countdown({
           the other. Neither is centred, and the button is sized to its label rather
           than to the window — a full-width one became a target the width of a
           paragraph on a desktop. */}
-      <div className="stage-actions">
-        <div className="stage-tools">{tools}</div>
+      <StageActions>
+        <StageTools>{tools}</StageTools>
 
         {/* Reset is an action on the run, not a tool for looking things up, so it
             travels with the button it undoes rather than with share and history.
             Nothing to undo from a timer that has not started, so it stays out of the
             way until there is. */}
-        <div className="stage-primary">
+        <StagePrimary>
           {isDuration && status !== 'idle' && (
-            <button className="icon-button" onClick={onReset} aria-label="Reset the timer">
+            <IconButton onClick={onReset} aria-label="Reset the timer">
               <RotateCcw size={18} />
-            </button>
+            </IconButton>
           )}
 
           {isDuration ? (
-            <button className="primary-button" onClick={onToggle}>
+            <PrimaryButton onClick={onToggle}>
               {actionLabel(status)}
-            </button>
+            </PrimaryButton>
           ) : (
-            <button className="primary-button" onClick={onEditTarget}>
+            <PrimaryButton onClick={onEditTarget}>
               {targetLabel}
-            </button>
+            </PrimaryButton>
           )}
-        </div>
-      </div>
+        </StagePrimary>
+      </StageActions>
     </div>
   )
 }

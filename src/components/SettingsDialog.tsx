@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { IconButton } from './buttons.styled'
 import { ChevronLeft, History, Keyboard, X } from 'lucide-react'
 import type { Session } from '@/lib/session'
 import { shortcuts } from '@/lib/shortcuts'
@@ -68,14 +69,14 @@ export function SettingsDialog({
   const header = (title: string, onBack?: () => void) => (
     <div className="settings-header">
       {onBack && (
-        <button className="icon-button" onClick={onBack} aria-label="Back to settings">
+        <IconButton onClick={onBack} aria-label="Back to settings">
           <ChevronLeft size={18} />
-        </button>
+        </IconButton>
       )}
       <h2>{title}</h2>
-      <button className="icon-button" onClick={onClose} aria-label="Close settings">
+      <IconButton onClick={onClose} aria-label="Close settings">
         <X size={18} />
-      </button>
+      </IconButton>
     </div>
   )
 

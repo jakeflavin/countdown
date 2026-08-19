@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { IconButton } from './components/buttons.styled'
 import { History, Settings as SettingsIcon } from 'lucide-react'
 import { playChime, primeAlarm } from './lib/alarm'
 import { Countdown } from './components/Countdown'
@@ -201,9 +202,9 @@ export default function App() {
       <div className="app">
         <header className="app-header">
           <h1 className="app-title">Countdown</h1>
-          <button className="icon-button" onClick={openSettings} aria-label="Open settings">
+          <IconButton onClick={openSettings} aria-label="Open settings">
             <SettingsIcon size={20} />
-          </button>
+          </IconButton>
         </header>
 
         <main className="app-main">
@@ -222,13 +223,12 @@ export default function App() {
             tools={
               <>
                 <ShareButton url={buildShareUrl(settings)} />
-                <button
-                  className="icon-button"
+                <IconButton
                   onClick={() => setSessionOpen(true)}
                   aria-label="View past runs"
                 >
                   <History size={18} />
-                </button>
+                </IconButton>
               </>
             }
           />
