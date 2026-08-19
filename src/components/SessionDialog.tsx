@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import { Drawer, DrawerHeader } from './drawer.styled'
 import { IconButton } from './buttons.styled'
 import { X } from 'lucide-react'
 import { formatSpan } from '@/lib/duration'
@@ -34,13 +35,13 @@ export function SessionDialog({ open, onClose, session, onClear }: SessionDialog
   const finished = completedMs(session.entries)
 
   return (
-    <dialog ref={ref} className="drawer drawer-session" onClose={onClose} onClick={onDialogClick}>
-      <div className="settings-header">
+    <Drawer ref={ref} onClose={onClose} onClick={onDialogClick}>
+      <DrawerHeader>
         <h2>History</h2>
         <IconButton onClick={onClose} aria-label="Close history">
           <X size={18} />
         </IconButton>
-      </div>
+      </DrawerHeader>
 
       {days.length === 0 ? (
         <p className="settings-hint">Nothing counted yet. Timers you run will collect here.</p>
@@ -89,6 +90,6 @@ export function SessionDialog({ open, onClose, session, onClear }: SessionDialog
           </button>
         </>
       )}
-    </dialog>
+    </Drawer>
   )
 }

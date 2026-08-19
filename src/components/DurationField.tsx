@@ -1,4 +1,5 @@
 import { clampDuration, DAY, partsToMs, splitParts } from '@/lib/duration'
+import { GroupField } from './drawer.styled'
 import { presets } from '@/lib/presets'
 
 type DurationFieldProps = {
@@ -29,7 +30,7 @@ export function DurationField({ ms, onChange }: DurationFieldProps) {
 
   return (
     <>
-      <div className="group-field">
+      <GroupField>
         {fields.map((field) => (
           <label key={field.unit}>
             {field.label}
@@ -43,9 +44,9 @@ export function DurationField({ ms, onChange }: DurationFieldProps) {
             />
           </label>
         ))}
-      </div>
+      </GroupField>
 
-      <div className="group-field is-presets">
+      <GroupField $wrap>
         {presets.map((preset) => (
           <button
             key={preset.label}
@@ -56,7 +57,7 @@ export function DurationField({ ms, onChange }: DurationFieldProps) {
             {preset.label}
           </button>
         ))}
-      </div>
+      </GroupField>
 
       {ms >= DAY && (
         <p className="settings-hint">

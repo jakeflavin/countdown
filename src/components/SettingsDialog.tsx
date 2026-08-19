@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { Drawer, DrawerHeader, Group, GroupCard, GroupField, SegmentButton, Segmented } from './drawer.styled'
 import { IconButton } from './buttons.styled'
 import { ChevronLeft, History, Keyboard, X } from 'lucide-react'
 import type { Session } from '@/lib/session'
@@ -67,7 +68,7 @@ export function SettingsDialog({
   }
 
   const header = (title: string, onBack?: () => void) => (
-    <div className="settings-header">
+    <DrawerHeader>
       {onBack && (
         <IconButton onClick={onBack} aria-label="Back to settings">
           <ChevronLeft size={18} />
@@ -77,11 +78,11 @@ export function SettingsDialog({
       <IconButton onClick={onClose} aria-label="Close settings">
         <X size={18} />
       </IconButton>
-    </div>
+    </DrawerHeader>
   )
 
   return (
-    <dialog ref={ref} className="drawer drawer-settings" onClose={onClose} onClick={onDialogClick}>
+    <Drawer ref={ref} onClose={onClose} onClick={onDialogClick}>
       {page === 'shortcuts' ? (
         <>
           {header('Shortcuts', () => setPage('main'))}
@@ -102,26 +103,26 @@ export function SettingsDialog({
         <>
           {header('Settings')}
 
-          <fieldset className="settings-group">
+          <Group>
             <legend>Counting</legend>
             {/* Two choices that swap the whole screen, so they are shown side by side
                 rather than hidden in a dropdown one of them is always behind. */}
-            <div className="segmented">
+            <Segmented>
               {modes.map((mode) => (
-                <button
+                <SegmentButton
                   key={mode.id}
-                  className={`segment-button${mode.id === settings.mode ? ' is-active' : ''}`}
+                  $active={mode.id === settings.mode}
                   onClick={() => onChange({ ...settings, mode: mode.id })}
                   aria-pressed={mode.id === settings.mode}
                 >
                   {mode.name}
-                </button>
+                  </SegmentButton>
               ))}
-            </div>
+            </Segmented>
 
             {/* The card holds whatever the chosen mode needs, so the two modes' settings
                 never read as one flat stack of unrelated controls. */}
-            <div className="group-card">
+            <GroupCard>
               {settings.mode === 'duration' ? (
                 <DurationField
                   ms={settings.durationMs}
@@ -133,7 +134,7 @@ export function SettingsDialog({
                     value={settings.targetAt}
                     onChange={(targetAt) => onChange({ ...settings, targetAt })}
                   />
-                  <div className="group-field">
+                  <GroupField>
                     <label>
                       Name
                       <input
@@ -143,15 +144,15 @@ export function SettingsDialog({
                         onChange={(e) => onChange({ ...settings, eventName: e.target.value })}
                       />
                     </label>
-                  </div>
+                  </GroupField>
                 </>
               )}
-            </div>
-          </fieldset>
+            </GroupCard>
+          </Group>
 
           {/* A row rather than a titled group: the label on the switch says the whole
               thing, so a heading above it would only repeat itself. */}
-          <div className="settings-group switch-row">
+          <Group as="div" $row className="switch-row">
             <label htmlFor="sound">Chime at zero</label>
             <input
               id="sound"
@@ -160,13 +161,13 @@ export function SettingsDialog({
               checked={settings.sound}
               onChange={(e) => onChange({ ...settings, sound: e.target.checked })}
             />
-          </div>
+          </Group>
 
           {/* Everything above changes what is counted; everything below changes how it
               looks. The rule keeps the two from reading as one long list. */}
           <hr className="settings-divider" />
 
-          <fieldset className="settings-group">
+          <Group>
             <legend>Theme</legend>
             <div className="theme-grid">
               {themes.map((t) => (
@@ -247,20 +248,20 @@ export function SettingsDialog({
             </div>
 
             {settings.themeId === CUSTOM_THEME_ID && (
-              <div className="group-card">
+              <GroupCard>
                 <CustomThemeControls
                   settings={settings}
                   onChange={onChange}
                   image={customImage}
                   onImage={onCustomImage}
                 />
-              </div>
+              </GroupCard>
             )}
-          </fieldset>
+          </Group>
 
           <hr className="settings-divider" />
 
-          <fieldset className="settings-group">
+          <Group>
             <legend>History and backup</legend>
             <div className="button-grid">
               <button className="outline-button" onClick={onOpenSession}>
@@ -276,9 +277,9 @@ export function SettingsDialog({
               )}
             </div>
             <BackupControls settings={settings} session={session} onRestore={onRestore} />
-          </fieldset>
+          </Group>
         </>
       )}
-    </dialog>
+    </Drawer>
   )
 }

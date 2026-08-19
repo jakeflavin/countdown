@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react'
+import { GroupField, SegmentButton, Segmented } from './drawer.styled'
 import { IconButton } from './buttons.styled'
 import { ImagePlus, Trash2 } from 'lucide-react'
 import { gradients } from '@/lib/gradients'
@@ -52,23 +53,23 @@ export function CustomThemeControls({
 
   return (
     <>
-      <div className="group-field is-kinds">
-        <div className="segmented is-inline">
+      <GroupField $wrap>
+        <Segmented $inline>
           {kinds.map((kind) => (
-            <button
+            <SegmentButton
               key={kind.id}
-              className={`segment-button${settings.customKind === kind.id ? ' is-active' : ''}`}
+              $active={settings.customKind === kind.id}
               onClick={() => onChange({ ...settings, customKind: kind.id })}
               aria-pressed={settings.customKind === kind.id}
             >
               {kind.name}
-            </button>
+              </SegmentButton>
           ))}
-        </div>
-      </div>
+        </Segmented>
+      </GroupField>
 
       {settings.customKind === 'gradient' ? (
-        <div className="group-field is-gradients">
+        <GroupField $wrap>
           {gradients.map((gradient) => (
             <button
               key={gradient.id}
@@ -82,10 +83,10 @@ export function CustomThemeControls({
               title={gradient.name}
             />
           ))}
-        </div>
+        </GroupField>
       ) : (
         <>
-          <div className="group-field is-image">
+          <GroupField $wrap>
             {image && (
               <span
                 className="image-thumb"
@@ -120,7 +121,7 @@ export function CustomThemeControls({
               accept="image/*"
               onChange={(e) => onFile(e.target.files?.[0])}
             />
-          </div>
+          </GroupField>
 
           {!image && !status && (
             <p className="settings-hint is-inset">

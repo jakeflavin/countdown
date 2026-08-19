@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { GroupField } from './drawer.styled'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import {
   firstDayOfWeek,
@@ -116,7 +117,7 @@ export function TargetPicker({ value, onChange }: TargetPickerProps) {
         </div>
       </div>
 
-      <div className="group-field is-time">
+      <GroupField $between>
         <label htmlFor="target-hour">Time</label>
         <div className="time-row">
           <select
@@ -168,7 +169,7 @@ export function TargetPicker({ value, onChange }: TargetPickerProps) {
             </select>
           )}
         </div>
-      </div>
+      </GroupField>
     </>
   )
 }
