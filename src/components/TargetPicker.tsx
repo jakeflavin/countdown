@@ -1,4 +1,16 @@
 import { useState } from 'react'
+import {
+  Calendar,
+  CalendarHead,
+  CalendarNav,
+  Colon,
+  Day,
+  Grid,
+  Month,
+  TimeRow,
+  TimeSelect,
+  Weekday,
+} from './TargetPicker.styled'
 import { GroupField } from './drawer.styled'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import {
@@ -66,26 +78,26 @@ export function TargetPicker({ value, onChange }: TargetPickerProps) {
 
   return (
     <>
-      <div className="calendar">
-        <div className="calendar-head">
-          <button className="calendar-nav" onClick={() => step(-1)} aria-label="Previous month">
+      <Calendar>
+        <CalendarHead>
+          <CalendarNav onClick={() => step(-1)} aria-label="Previous month">
             <ChevronLeft size={16} />
-          </button>
+          </CalendarNav>
           {/* Polite rather than assertive: paging months should not interrupt whatever
               a screen reader is in the middle of. */}
-          <span className="calendar-month" aria-live="polite">
+          <Month aria-live="polite">
             {monthLabel(view.year, view.month)}
-          </span>
-          <button className="calendar-nav" onClick={() => step(1)} aria-label="Next month">
+          </Month>
+          <CalendarNav onClick={() => step(1)} aria-label="Next month">
             <ChevronRight size={16} />
-          </button>
-        </div>
+          </CalendarNav>
+        </CalendarHead>
 
-        <div className="calendar-grid" role="grid">
+        <Grid role="grid">
           {weekdayLabels(first).map((label) => (
-            <span className="calendar-weekday" key={label} role="columnheader">
+            <Weekday key={label} role="columnheader">
               {label}
-            </span>
+            </Weekday>
           ))}
 
           {cells.map((cell) => {
@@ -96,11 +108,10 @@ export function TargetPicker({ value, onChange }: TargetPickerProps) {
             const isToday = sameDay(date, today)
 
             return (
-              <button
+              <Day
                 key={cell.key}
-                className={`calendar-day${isSelected ? ' is-selected' : ''}${
-                  isToday ? ' is-today' : ''
-                }`}
+                $selected={isSelected}
+                $today={isToday}
                 onClick={() => pickDay(cell.day!)}
                 aria-pressed={isSelected}
                 aria-label={date.toLocaleDateString(undefined, {
@@ -111,18 +122,17 @@ export function TargetPicker({ value, onChange }: TargetPickerProps) {
                 })}
               >
                 {cell.day}
-              </button>
+              </Day>
             )
           })}
-        </div>
-      </div>
+        </Grid>
+      </Calendar>
 
       <GroupField $between>
         <label htmlFor="target-hour">Time</label>
-        <div className="time-row">
-          <select
+        <TimeRow>
+          <TimeSelect
             id="target-hour"
-            className="time-select"
             value={displayHour}
             onChange={(e) => {
               const picked = Number(e.target.value)
@@ -138,12 +148,11 @@ export function TargetPicker({ value, onChange }: TargetPickerProps) {
                 {hour12 ? h : String(h).padStart(2, '0')}
               </option>
             ))}
-          </select>
+          </TimeSelect>
 
-          <span className="time-colon">:</span>
+          <Colon>:</Colon>
 
-          <select
-            className="time-select"
+          <TimeSelect
             value={base.getMinutes()}
             onChange={(e) => setTime(hours, Number(e.target.value))}
             aria-label="Minute"
@@ -153,11 +162,10 @@ export function TargetPicker({ value, onChange }: TargetPickerProps) {
                 {String(m).padStart(2, '0')}
               </option>
             ))}
-          </select>
+          </TimeSelect>
 
           {hour12 && (
-            <select
-              className="time-select is-meridiem"
+            <TimeSelect
               value={hours >= 12 ? 'pm' : 'am'}
               onChange={(e) =>
                 setTime((hours % 12) + (e.target.value === 'pm' ? 12 : 0), base.getMinutes())
@@ -166,9 +174,9 @@ export function TargetPicker({ value, onChange }: TargetPickerProps) {
             >
               <option value="am">AM</option>
               <option value="pm">PM</option>
-            </select>
+            </TimeSelect>
           )}
-        </div>
+        </TimeRow>
       </GroupField>
     </>
   )
