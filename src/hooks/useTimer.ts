@@ -11,7 +11,7 @@ import {
   saveRun,
   startRun,
   type TimerRun,
-} from '../lib/timer'
+} from '@/lib/timer'
 
 type Options = {
   /** The duration a fresh run starts from. */

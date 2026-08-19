@@ -7,7 +7,7 @@ import {
   prefers12Hour,
   sameDay,
   weekdayLabels,
-} from '../lib/calendar'
+} from '@/lib/calendar'
 
 type TargetPickerProps = {
   /** The chosen moment, or null while nothing has been picked yet. */

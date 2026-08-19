@@ -2,7 +2,7 @@ import { clampDuration } from './duration'
 import { defaultGradient, gradients } from './gradients'
 import { emptySession, type Session, type SessionEntry } from './session'
 import { CUSTOM_THEME_ID, themes } from './themes'
-import type { Settings } from '../hooks/useSettings'
+import type { Settings } from '@/hooks/useSettings'
 
 /** Bumped only if the shape changes in a way an older file cannot satisfy. */
 export const BACKUP_VERSION = 1

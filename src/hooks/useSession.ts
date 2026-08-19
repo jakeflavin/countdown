@@ -6,7 +6,7 @@ import {
   saveSession,
   type Session,
   type SessionEntry,
-} from '../lib/session'
+} from '@/lib/session'
 
 export function useSession() {
   const [session, setSession] = useState(loadSession)

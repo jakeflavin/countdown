@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
-import { clampDuration, MINUTE } from '../lib/duration'
-import { defaultGradient, gradients } from '../lib/gradients'
-import { defaultTheme, type CustomKind } from '../lib/themes'
-import { readInitialSettings } from '../lib/shareUrl'
+import { clampDuration, MINUTE } from '@/lib/duration'
+import { defaultGradient, gradients } from '@/lib/gradients'
+import { defaultTheme, type CustomKind } from '@/lib/themes'
+import { readInitialSettings } from '@/lib/shareUrl'
 
 /** What the app is counting: a duration you start, or a moment on the calendar. */
 export type Mode = 'duration' | 'date'
