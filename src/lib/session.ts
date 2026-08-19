@@ -54,8 +54,7 @@ export function addEntry(session: Session, entry: SessionEntry): Session {
   return { entries: [...session.entries, entry].slice(-MAX_ENTRIES) }
 }
 
-export const hasKey = (session: Session, key: string) =>
-  session.entries.some((e) => e.key === key)
+export const hasKey = (session: Session, key: string) => session.entries.some((e) => e.key === key)
 
 const startOfDay = (ms: number) => {
   const d = new Date(ms)

@@ -43,9 +43,7 @@ const pad = (n: number) => String(n).padStart(2, '0')
 export function formatClock(ms: number) {
   const { days, hours, minutes, seconds } = splitParts(ms)
   const allHours = days * 24 + hours
-  return allHours > 0
-    ? `${allHours}:${pad(minutes)}:${pad(seconds)}`
-    : `${minutes}:${pad(seconds)}`
+  return allHours > 0 ? `${allHours}:${pad(minutes)}:${pad(seconds)}` : `${minutes}:${pad(seconds)}`
 }
 
 /** How long a run was, for a history row: "25m", "1h 30m", "45s". */
@@ -72,5 +70,4 @@ export function formatTarget(at: number) {
   })
 }
 
-export const clampDuration = (ms: number) =>
-  Math.min(MAX_DURATION, Math.max(0, Math.trunc(ms)))
+export const clampDuration = (ms: number) => Math.min(MAX_DURATION, Math.max(0, Math.trunc(ms)))

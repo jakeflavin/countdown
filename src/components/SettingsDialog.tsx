@@ -45,8 +45,7 @@ export function SettingsDialog({
   const ref = useRef<HTMLDialogElement>(null)
   const [page, setPage] = useState<'main' | 'shortcuts'>('main')
   // Touch devices get no shortcut list; there is nothing to press.
-  const hasKeyboard =
-    typeof window !== 'undefined' && window.matchMedia('(pointer: fine)').matches
+  const hasKeyboard = typeof window !== 'undefined' && window.matchMedia('(pointer: fine)').matches
 
   useEffect(() => {
     const el = ref.current
@@ -62,8 +61,7 @@ export function SettingsDialog({
   const onDialogClick = (e: React.MouseEvent<HTMLDialogElement>) => {
     if (e.target !== ref.current) return
     const { top, right, bottom, left } = ref.current.getBoundingClientRect()
-    const outside =
-      e.clientX < left || e.clientX > right || e.clientY < top || e.clientY > bottom
+    const outside = e.clientX < left || e.clientX > right || e.clientY < top || e.clientY > bottom
     if (outside) onClose()
   }
 
@@ -82,12 +80,7 @@ export function SettingsDialog({
   )
 
   return (
-    <dialog
-      ref={ref}
-      className="drawer drawer-settings"
-      onClose={onClose}
-      onClick={onDialogClick}
-    >
+    <dialog ref={ref} className="drawer drawer-settings" onClose={onClose} onClick={onDialogClick}>
       {page === 'shortcuts' ? (
         <>
           {header('Shortcuts', () => setPage('main'))}

@@ -24,7 +24,9 @@ export function weekdayLabels(first = firstDayOfWeek()): string[] {
   // Any week will do; this one starts on a Sunday. Built in local time rather than UTC,
   // because the formatter reads it in local time: a UTC midnight is the previous day
   // everywhere west of Greenwich, which shifted every label back by one.
-  return Array.from({ length: 7 }, (_, i) => format.format(new Date(2024, 0, 7 + ((first + i) % 7))))
+  return Array.from({ length: 7 }, (_, i) =>
+    format.format(new Date(2024, 0, 7 + ((first + i) % 7))),
+  )
 }
 
 export type MonthCell = {

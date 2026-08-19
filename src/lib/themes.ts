@@ -178,9 +178,7 @@ export type CustomKind = 'gradient' | 'image'
 
 /** What actually gets painted behind the time. */
 export type Backdrop =
-  | { kind: 'scene'; id: string }
-  | { kind: 'gradient'; css: string }
-  | { kind: 'image'; url: string }
+  { kind: 'scene'; id: string } | { kind: 'gradient'; css: string } | { kind: 'image'; url: string }
 
 /** Chrome for a user's own picture, where there is no hand-tuned palette to fall back
  *  on — only whether the picture is dark or light overall. */

@@ -36,7 +36,9 @@ export function TargetPicker({ value, onChange }: TargetPickerProps) {
 
   // Time edits need a date to belong to, so an unset target starts from today rather
   // than refusing the edit.
-  const base = selected ?? new Date(today.getFullYear(), today.getMonth(), today.getDate(), DEFAULT_HOUR, 0, 0, 0)
+  const base =
+    selected ??
+    new Date(today.getFullYear(), today.getMonth(), today.getDate(), DEFAULT_HOUR, 0, 0, 0)
 
   const step = (by: number) => {
     const next = new Date(view.year, view.month + by, 1)
@@ -65,11 +67,7 @@ export function TargetPicker({ value, onChange }: TargetPickerProps) {
     <>
       <div className="calendar">
         <div className="calendar-head">
-          <button
-            className="calendar-nav"
-            onClick={() => step(-1)}
-            aria-label="Previous month"
-          >
+          <button className="calendar-nav" onClick={() => step(-1)} aria-label="Previous month">
             <ChevronLeft size={16} />
           </button>
           {/* Polite rather than assertive: paging months should not interrupt whatever
@@ -77,11 +75,7 @@ export function TargetPicker({ value, onChange }: TargetPickerProps) {
           <span className="calendar-month" aria-live="polite">
             {monthLabel(view.year, view.month)}
           </span>
-          <button
-            className="calendar-nav"
-            onClick={() => step(1)}
-            aria-label="Next month"
-          >
+          <button className="calendar-nav" onClick={() => step(1)} aria-label="Next month">
             <ChevronRight size={16} />
           </button>
         </div>

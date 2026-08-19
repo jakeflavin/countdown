@@ -17,7 +17,12 @@ const kinds: Array<{ id: CustomKind; name: string }> = [
   { id: 'image', name: 'Image' },
 ]
 
-export function CustomThemeControls({ settings, onChange, image, onImage }: CustomThemeControlsProps) {
+export function CustomThemeControls({
+  settings,
+  onChange,
+  image,
+  onImage,
+}: CustomThemeControlsProps) {
   const fileRef = useRef<HTMLInputElement>(null)
   const [status, setStatus] = useState<{ text: string; error: boolean } | null>(null)
   const [working, setWorking] = useState(false)
@@ -125,9 +130,7 @@ export function CustomThemeControls({ settings, onChange, image, onImage }: Cust
       )}
 
       {status && (
-        <p className={`settings-hint is-inset${status.error ? ' is-error' : ''}`}>
-          {status.text}
-        </p>
+        <p className={`settings-hint is-inset${status.error ? ' is-error' : ''}`}>{status.text}</p>
       )}
     </>
   )

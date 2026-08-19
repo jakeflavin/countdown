@@ -75,7 +75,12 @@ export default function App() {
     [record],
   )
 
-  const { run, toggle, reset, remaining: remainingAt } = useTimer({
+  const {
+    run,
+    toggle,
+    reset,
+    remaining: remainingAt,
+  } = useTimer({
     durationMs: settings.durationMs,
     onDone,
     onAbandon,
@@ -121,9 +126,7 @@ export default function App() {
   const clock = formatClock(remaining)
   useEffect(() => {
     document.title =
-      mode === 'duration' && run.status === 'running'
-        ? `${clock} · Countdown`
-        : 'Countdown'
+      mode === 'duration' && run.status === 'running' ? `${clock} · Countdown` : 'Countdown'
   }, [mode, run.status, clock])
 
   // Shortcuts for the app's own chrome. Starting and pausing is handled by the
@@ -184,8 +187,7 @@ export default function App() {
 
   // The theme swatches are 60 pixels of preview, so a date span is cut to its two
   // largest units rather than shown in full and ellipsized to "136d 4…".
-  const sample =
-    mode === 'duration' ? clock : formatSpan(shownMs).split(' ').slice(0, 2).join(' ')
+  const sample = mode === 'duration' ? clock : formatSpan(shownMs).split(' ').slice(0, 2).join(' ')
 
   const openSettings = useCallback(() => {
     setSettingsPage('main')

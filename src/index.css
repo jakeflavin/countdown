@@ -15,7 +15,11 @@ body,
 
 body {
   margin: 0;
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family:
+    'Inter',
+    system-ui,
+    -apple-system,
+    sans-serif;
   color: var(--text);
   /* The scene's own average color, so the moment before the video paints is the scene's
      color rather than white. */
@@ -226,7 +230,9 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  transition: transform 120ms ease, opacity 120ms ease;
+  transition:
+    transform 120ms ease,
+    opacity 120ms ease;
 }
 
 .primary-button:hover {
@@ -495,7 +501,10 @@ body {
   border: 1px solid var(--line);
   border-radius: 999px;
   cursor: pointer;
-  transition: transform 120ms ease, color 120ms ease, background 120ms ease;
+  transition:
+    transform 120ms ease,
+    color 120ms ease,
+    background 120ms ease;
 }
 
 .calendar-nav:hover {
@@ -685,7 +694,9 @@ body {
   border-radius: 50%;
   opacity: 0.55;
   transform: translateY(-50%);
-  transition: left 150ms ease, opacity 150ms ease;
+  transition:
+    left 150ms ease,
+    opacity 150ms ease;
 }
 
 .switch-row input:checked {

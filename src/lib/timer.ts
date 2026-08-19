@@ -91,5 +91,4 @@ export function elapsedOf(run: TimerRun, now: number) {
   return Math.max(0, run.durationMs - remainingOf(run, now, run.durationMs))
 }
 
-export const isActive = (run: TimerRun) =>
-  run.status === 'running' || run.status === 'paused'
+export const isActive = (run: TimerRun) => run.status === 'running' || run.status === 'paused'

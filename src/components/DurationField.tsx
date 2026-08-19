@@ -60,8 +60,8 @@ export function DurationField({ ms, onChange }: DurationFieldProps) {
 
       {ms >= DAY && (
         <p className="settings-hint">
-          Over a day. Date mode may read better at this length — it counts to a moment on
-          the calendar rather than to the end of a run you start.
+          Over a day. Date mode may read better at this length — it counts to a moment on the
+          calendar rather than to the end of a run you start.
         </p>
       )}
     </>

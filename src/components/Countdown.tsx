@@ -82,14 +82,7 @@ export function Countdown({
   return (
     <div className="stage">
       <div className="stage-display">
-        <TimeDisplay
-          mode={mode}
-          ms={ms}
-          past={past}
-          label={label}
-          done={done}
-          theme={theme}
-        />
+        <TimeDisplay mode={mode} ms={ms} past={past} label={label} done={done} theme={theme} />
       </div>
 
       {/* Opposite corners: the secondary controls to one side, the primary button to

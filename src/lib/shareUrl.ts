@@ -56,9 +56,7 @@ export function settingsFromParams(params: URLSearchParams, base: Settings): Set
     eventName: params.get('name') ?? base.eventName,
     sound: params.has('sound') ? params.get('sound') === '1' : base.sound,
     themeId:
-      theme === CUSTOM_THEME_ID || themes.some((t) => t.id === theme)
-        ? theme!
-        : base.themeId,
+      theme === CUSTOM_THEME_ID || themes.some((t) => t.id === theme) ? theme! : base.themeId,
     customKind: bg === 'image' || bg === 'gradient' ? bg : base.customKind,
     customGradientId: gradients.some((g) => g.id === grad)
       ? grad!

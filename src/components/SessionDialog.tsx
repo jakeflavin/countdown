@@ -25,8 +25,7 @@ export function SessionDialog({ open, onClose, session, onClear }: SessionDialog
   const onDialogClick = (e: React.MouseEvent<HTMLDialogElement>) => {
     if (e.target !== ref.current) return
     const { top, right, bottom, left } = ref.current.getBoundingClientRect()
-    const outside =
-      e.clientX < left || e.clientX > right || e.clientY < top || e.clientY > bottom
+    const outside = e.clientX < left || e.clientX > right || e.clientY < top || e.clientY > bottom
     if (outside) onClose()
   }
 
@@ -34,12 +33,7 @@ export function SessionDialog({ open, onClose, session, onClear }: SessionDialog
   const finished = completedMs(session.entries)
 
   return (
-    <dialog
-      ref={ref}
-      className="drawer drawer-session"
-      onClose={onClose}
-      onClick={onDialogClick}
-    >
+    <dialog ref={ref} className="drawer drawer-session" onClose={onClose} onClick={onDialogClick}>
       <div className="settings-header">
         <h2>History</h2>
         <button className="icon-button" onClick={onClose} aria-label="Close history">
@@ -48,9 +42,7 @@ export function SessionDialog({ open, onClose, session, onClear }: SessionDialog
       </div>
 
       {days.length === 0 ? (
-        <p className="settings-hint">
-          Nothing counted yet. Timers you run will collect here.
-        </p>
+        <p className="settings-hint">Nothing counted yet. Timers you run will collect here.</p>
       ) : (
         <>
           <p className="options-count">
