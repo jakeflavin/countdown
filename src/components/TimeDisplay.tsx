@@ -1,4 +1,13 @@
 import type { CSSProperties } from 'react'
+import {
+  Clock,
+  Display,
+  Label,
+  Segment,
+  SegmentUnit,
+  SegmentValue,
+  Segments,
+} from './TimeDisplay.styled'
 import { formatClock, splitParts } from '@/lib/duration'
 import type { Theme } from '@/lib/themes'
 import type { Mode } from '@/hooks/useSettings'
@@ -42,28 +51,28 @@ export function TimeDisplay({ mode, ms, past, label, done, theme }: TimeDisplayP
   }
 
   return (
-    <div className={`display${done ? ' is-done' : ''}`}>
-      {label && <p className="display-label">{label}</p>}
+    <Display $done={done}>
+      {label && <Label>{label}</Label>}
 
       {mode === 'duration' ? (
-        <p className="display-clock" style={font}>
+        <Clock style={font}>
           {formatClock(ms)}
-        </p>
+        </Clock>
       ) : (
-        <div className="display-segments">
+        <Segments>
           {segments(ms).map((segment, i) => (
-            <div className="segment" key={segment.unit}>
-              <span className="segment-value" style={font}>
+            <Segment key={segment.unit}>
+              <SegmentValue style={font}>
                 {/* The sign belongs to the whole span, not to each unit, so only the
                     leading segment carries it. */}
                 {past && i === 0 ? '+' : ''}
                 {segment.value}
-              </span>
-              <span className="segment-unit">{segment.unit}</span>
-            </div>
+              </SegmentValue>
+              <SegmentUnit>{segment.unit}</SegmentUnit>
+            </Segment>
           ))}
-        </div>
+        </Segments>
       )}
-    </div>
+    </Display>
   )
 }

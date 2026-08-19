@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Scene as SceneLayer, SceneScrim, SceneStill, SceneVideo } from './Backdrop.styled'
 import {
   scenePoster,
   sceneVideo,
@@ -57,15 +58,14 @@ function Scene({ id }: { id: string }) {
   const poster = scenePoster(id, orientation)
 
   if (reducedMotion) {
-    return <div className="scene-still" style={{ backgroundImage: `url(${poster})` }} />
+    return <SceneStill style={{ backgroundImage: `url(${poster})` }} />
   }
 
   return (
     // Keyed so that changing scene or orientation mounts a new element rather than
     // swapping the source under a playing video, which leaves the old frame up.
-    <video
+    <SceneVideo
       key={`${id}-${orientation}`}
-      className="scene-video"
       src={sceneVideo(id, orientation)}
       poster={poster}
       autoPlay
@@ -79,20 +79,20 @@ function Scene({ id }: { id: string }) {
 
 export function Backdrop({ backdrop, theme }: BackdropProps) {
   return (
-    <div className="scene" aria-hidden="true">
+    <SceneLayer aria-hidden="true">
       {backdrop.kind === 'scene' ? (
         <Scene id={backdrop.id} />
       ) : backdrop.kind === 'image' ? (
-        <div className="scene-still" style={{ backgroundImage: `url(${backdrop.url})` }} />
+        <SceneStill style={{ backgroundImage: `url(${backdrop.url})` }} />
       ) : (
-        <div className="scene-still" style={{ background: backdrop.css }} />
+        <SceneStill style={{ background: backdrop.css }} />
       )}
 
       {/* A gradient was designed to be looked at directly, so it asks for no wash; a
           scene or a photograph does. */}
       {theme.scrim !== 'none' && (
-        <div className="scene-scrim" style={{ background: theme.scrim }} />
+        <SceneScrim style={{ background: theme.scrim }} />
       )}
-    </div>
+    </SceneLayer>
   )
 }

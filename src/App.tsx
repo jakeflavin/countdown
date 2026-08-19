@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { Header, Main, Shell, Title } from './App.styled'
 import { IconButton } from './components/buttons.styled'
 import { History, Settings as SettingsIcon } from 'lucide-react'
 import { playChime, primeAlarm } from './lib/alarm'
@@ -199,15 +200,15 @@ export default function App() {
     <>
       <Backdrop backdrop={backdrop} theme={theme} />
 
-      <div className="app">
-        <header className="app-header">
-          <h1 className="app-title">Countdown</h1>
+      <Shell>
+        <Header>
+          <Title>Countdown</Title>
           <IconButton onClick={openSettings} aria-label="Open settings">
             <SettingsIcon size={20} />
           </IconButton>
-        </header>
+        </Header>
 
-        <main className="app-main">
+        <Main>
           <Countdown
             mode={mode}
             ms={shownMs}
@@ -232,7 +233,7 @@ export default function App() {
               </>
             }
           />
-        </main>
+        </Main>
 
         <SessionDialog
           open={sessionOpen}
@@ -260,7 +261,7 @@ export default function App() {
           customImage={customImage}
           onCustomImage={setCustomImage}
         />
-      </div>
+      </Shell>
     </>
   )
 }

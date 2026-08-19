@@ -1,6 +1,7 @@
 import { useEffect, type ReactNode } from 'react'
 import { IconButton, PrimaryButton } from './buttons.styled'
 import { StageActions, StagePrimary, StageTools } from './Countdown.styled'
+import { Stage, StageDisplay } from './TimeDisplay.styled'
 import { RotateCcw } from 'lucide-react'
 import { isDrawerOpen, isTypingTarget, targetElement } from '@/lib/shortcuts'
 import type { Theme } from '@/lib/themes'
@@ -82,10 +83,10 @@ export function Countdown({
   }, [isDuration, onToggle, onReset])
 
   return (
-    <div className="stage">
-      <div className="stage-display">
+    <Stage>
+      <StageDisplay>
         <TimeDisplay mode={mode} ms={ms} past={past} label={label} done={done} theme={theme} />
-      </div>
+      </StageDisplay>
 
       {/* Opposite corners: the secondary controls to one side, the primary button to
           the other. Neither is centred, and the button is sized to its label rather
@@ -116,6 +117,6 @@ export function Countdown({
           )}
         </StagePrimary>
       </StageActions>
-    </div>
+    </Stage>
   )
 }
