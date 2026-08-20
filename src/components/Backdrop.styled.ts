@@ -7,6 +7,11 @@ export const Scene = styled.div`
   z-index: 0;
   overflow: hidden;
   background: var(--bg);
+
+  /* A photograph is the one thing a printed countdown should not spend a page on. */
+  @media print {
+    display: none;
+  }
 `
 
 /*

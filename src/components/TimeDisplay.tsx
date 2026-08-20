@@ -3,6 +3,7 @@ import {
   Clock,
   Display,
   Label,
+  Prompt,
   Segment,
   SegmentUnit,
   SegmentValue,
@@ -16,8 +17,9 @@ type TimeDisplayProps = {
   mode: Mode
   /** Time left, or time since, always as a positive span. */
   ms: number
-  /** Date mode, past its target: the same span, now counting up. */
-  past?: boolean
+  /** Date mode, with no target chosen yet. A span of zero is not a countdown at zero, and
+   *  must not be drawn as one. */
+  unset?: boolean
   /** The event's name, or nothing when it has none. */
   label?: string
   /** At zero, which the display says louder than the digits alone can. */
@@ -43,7 +45,7 @@ function segments(ms: number) {
   return all.slice(first === -1 ? 2 : Math.min(first, 2))
 }
 
-export function TimeDisplay({ mode, ms, past, label, done, theme }: TimeDisplayProps) {
+export function TimeDisplay({ mode, ms, unset, label, done, theme }: TimeDisplayProps) {
   const font: CSSProperties = {
     fontFamily: theme.displayFont,
     fontWeight: theme.displayWeight,
@@ -58,16 +60,19 @@ export function TimeDisplay({ mode, ms, past, label, done, theme }: TimeDisplayP
         <Clock style={font}>
           {formatClock(ms)}
         </Clock>
+      ) : unset ? (
+        // Zeroes here would read as a countdown that had finished, which is the one thing
+        // this screen does not mean.
+        <Prompt style={font}>No date set</Prompt>
       ) : (
         <Segments>
-          {segments(ms).map((segment, i) => (
+          {segments(ms).map((segment) => (
             <Segment key={segment.unit}>
-              <SegmentValue style={font}>
-                {/* The sign belongs to the whole span, not to each unit, so only the
-                    leading segment carries it. */}
-                {past && i === 0 ? '+' : ''}
-                {segment.value}
-              </SegmentValue>
+              {/* Direction is carried by the label above, in a word. A leading "+" was the
+                  only difference between a date approaching and one long gone, and it was
+                  both too quiet to notice and wide enough to push its own digit off the
+                  centre of the unit beneath it. */}
+              <SegmentValue style={font}>{segment.value}</SegmentValue>
               <SegmentUnit>{segment.unit}</SegmentUnit>
             </Segment>
           ))}

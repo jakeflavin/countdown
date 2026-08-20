@@ -3,6 +3,11 @@ import { styled } from 'styled-components'
 import { IconButton, stageIconSize } from './buttons.styled'
 
 export const StageActions = styled.div`
+  /* Buttons on paper are just ink. */
+  @media print {
+    display: none;
+  }
+
   display: flex;
   align-items: center;
   justify-content: space-between;

@@ -9,6 +9,7 @@ import { SessionDialog } from './components/SessionDialog'
 import { SettingsDialog } from './components/SettingsDialog'
 import { ShareButton } from './components/ShareButton'
 import { formatClock, formatSpan, formatTarget } from './lib/duration'
+import { documentTitle } from './lib/title'
 import { buildShareUrl, settingsToParams } from './lib/shareUrl'
 import { isDrawerOpen, isTypingTarget } from './lib/shortcuts'
 import { gradientById } from './lib/gradients'
@@ -124,12 +125,18 @@ export default function App() {
     }
   }, [past, targetAt, eventName, record])
 
-  // Reading the tab strip should be enough to know where a running timer has got to.
+  // Reading the tab strip should be enough to know where a countdown has got to. That is
+  // every state worth backgrounding — a finished timer above all, since its chime may be
+  // off and the title is then the only thing left to say so.
   const clock = formatClock(remaining)
+  const span = formatSpan(shownMs)
   useEffect(() => {
-    document.title =
-      mode === 'duration' && run.status === 'running' ? `${clock} · Countdown` : 'Countdown'
-  }, [mode, run.status, clock])
+    document.title = documentTitle(
+      mode === 'duration'
+        ? { mode: 'duration', status: run.status, clock }
+        : { mode: 'date', targetAt, past, span },
+    )
+  }, [mode, run.status, clock, targetAt, past, span])
 
   // Shortcuts for the app's own chrome. Starting and pausing is handled by the
   // countdown, which owns those actions; these only open things.
@@ -184,8 +191,11 @@ export default function App() {
     toggle()
   }, [toggle])
 
-  // The name belongs to the target, so it has nothing to say about a duration.
-  const displayLabel = mode === 'date' ? eventName || undefined : undefined
+  // The name belongs to the target, so it has nothing to say about a duration. Once the
+  // target is behind us the label is also the only thing saying so — a "+" in front of the
+  // digits is too small a difference for a screen that otherwise looks identical.
+  const displayLabel =
+    mode !== 'date' ? undefined : past ? `Since ${eventName}`.trim() : eventName || undefined
 
   // The theme swatches are 60 pixels of preview, so a date span is cut to its two
   // largest units rather than shown in full and ellipsized to "136d 4…".
@@ -212,7 +222,7 @@ export default function App() {
           <Countdown
             mode={mode}
             ms={shownMs}
-            past={past}
+            unset={mode === 'date' && targetAt === null}
             label={displayLabel}
             done={run.status === 'done'}
             theme={theme}

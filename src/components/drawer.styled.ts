@@ -1,5 +1,7 @@
 import { styled } from 'styled-components'
 
+import { hitArea } from './buttons.styled'
+
 /**
  * The shell both drawers wear — settings and history — and the spacing scale they lay
  * their contents out on.
@@ -56,6 +58,10 @@ export const Drawer = styled.dialog`
     &::backdrop {
       animation: none;
     }
+  }
+
+  @media print {
+    display: none;
   }
 `
 
@@ -133,6 +139,7 @@ export const Segmented = styled.div<{ $inline?: boolean }>`
 
 export const SegmentButton = styled.button<{ $active?: boolean }>`
   flex: 1;
+  min-height: 44px;
   padding: 9px 12px;
   font: inherit;
   font-size: 14px;
@@ -179,18 +186,16 @@ export const GroupField = styled.div<{ $wrap?: boolean; $between?: boolean }>`
   input {
     width: 100%;
     min-width: 0;
+    /* 44px tall, and never below 16px: iOS zooms the viewport on focus for anything
+       smaller, and a fixed single-screen layout gives you no way to scroll back out. */
+    min-height: 44px;
     padding: 7px 10px;
     font: inherit;
-    font-size: 14px;
+    font-size: 16px;
     color: var(--text);
     background: transparent;
     border: 1px solid var(--line);
     border-radius: 8px;
-  }
-
-  input:focus-visible {
-    outline: 2px solid var(--text);
-    outline-offset: 1px;
   }
 
   input::placeholder {
@@ -207,9 +212,28 @@ export const Divider = styled.hr`
   border-top: 1px solid var(--line);
 `
 
+/**
+ * The preset durations. A grid rather than a wrapping row: five even columns make the
+ * scale readable as a scale, and they give every chip the same width — which is also how
+ * the shortest of them ("1h", "2h") clear a thumb without being padded out of line with
+ * the rest.
+ */
+export const Presets = styled.div`
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+  width: 100%;
+`
+
 /** A pill for a preset value: a duration, a scene. */
 export const Chip = styled.button<{ $active?: boolean }>`
-  padding: 7px 12px;
+  display: inline-flex;
+  align-items: center;
+  /* A preset is a one-tap control and the row is the fastest way to set a timer, so it
+     is sized for a thumb rather than for the text inside it. */
+  justify-content: center;
+  min-height: 44px;
+  padding: 7px 4px;
   font: inherit;
   font-size: 13px;
   color: ${(props) => (props.$active ? 'var(--text)' : 'var(--dim)')};
@@ -236,6 +260,18 @@ export const Switch = styled.input`
   border-radius: 999px;
   cursor: pointer;
   transition: background 150ms ease;
+
+  /* 26px tall is the switch; 44px is the thumb. ::after is the knob, so the hit area
+     goes on ::before. */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 44px;
+    transform: translate(-50%, -50%);
+  }
 
   &::after {
     content: '';
@@ -275,7 +311,7 @@ export const OutlineButton = styled.button`
   justify-content: center;
   gap: 7px;
   /* Actions were 16px-tall links, well under a comfortable touch target. */
-  min-height: 40px;
+  min-height: 44px;
   padding: 11px 12px;
   font: inherit;
   font-size: 14px;
@@ -296,6 +332,7 @@ export const OutlineButton = styled.button`
 `
 
 export const LinkButton = styled.button<{ $danger?: boolean }>`
+  ${hitArea}
   padding: 0 0 0 1px;
   font: inherit;
   font-size: 13px;
@@ -317,6 +354,39 @@ export const LinkButton = styled.button<{ $danger?: boolean }>`
     margin: var(--gap-block) auto 0;
     text-align: center;
   `}
+`
+
+/**
+ * The second step of clearing the history. It replaces the link in place rather than
+ * opening a dialog over it: the question is about the list directly behind it, and that
+ * list is worth being able to see while answering.
+ */
+export const ConfirmRow = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-top: var(--gap-block);
+  font-size: 13px;
+  color: var(--dim);
+`
+
+/** The one destructive control in the app, so it is the one thing wearing the warning. */
+export const Confirm = styled.button`
+  ${hitArea}
+  padding: 7px 14px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--bg);
+  background: var(--text);
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+
+  &:active {
+    transform: scale(0.97);
+  }
 `
 
 /** `$inset` lines the hint up with a card's own padding rather than the drawer's. */

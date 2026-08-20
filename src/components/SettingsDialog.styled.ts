@@ -1,5 +1,7 @@
 import { styled } from 'styled-components'
 
+import { hitArea } from './buttons.styled'
+
 export const ThemeGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -65,9 +67,12 @@ export const ThemeDescription = styled.span`
  * buttons; the name is on the tooltip and the accessible label.
  */
 export const GradientOption = styled.button<{ $active?: boolean }>`
+  ${hitArea}
   flex: 1 1 0;
   min-width: 0;
-  height: 34px;
+  /* Six across a 360px drawer cannot each be 44px wide, so the height carries what the
+     width cannot and the hit area makes up the rest. */
+  height: 44px;
   padding: 0;
   border: 1px solid var(--line);
   border-radius: 8px;

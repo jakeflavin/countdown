@@ -52,9 +52,15 @@ export const themes: Theme[] = [
       'radial-gradient(120% 90% at 50% 30%, rgba(255, 252, 250, 0.34) 0%, rgba(255, 252, 250, 0.1) 60%),' +
       'linear-gradient(180deg, rgba(255, 253, 252, 0.2) 0%, rgba(232, 222, 224, 0.42) 100%)',
     text: '#22323c',
-    muted: 'rgba(34, 50, 60, 0.62)',
+    // Heavier than the dark scenes' 0.62. The same alpha sinks a light ink toward a dark
+    // ground but lifts a dark ink toward a light one, so on the only light scene it has
+    // to be raised to reach the same contrast — 4.5:1 against the scene itself, where
+    // the unit labels sit with no surface under them, and 6.9:1 inside the drawer.
+    muted: 'rgba(34, 50, 60, 0.82)',
     surface: 'rgba(255, 255, 255, 0.82)',
-    border: 'rgba(34, 50, 60, 0.18)',
+    // Same correction, for the same reason: at 0.18 the preset pills were 1.4:1 against
+    // the drawer and read as ghosts, where the dark scenes' hairlines land near 1.7:1.
+    border: 'rgba(34, 50, 60, 0.28)',
     displayFont: '"Instrument Serif", Georgia, serif',
     displayWeight: 400,
     displayTracking: '-0.02em',

@@ -10,6 +10,10 @@ export const Stage = styled.div`
   flex-direction: column;
   gap: 24px;
   width: 100%;
+
+  @media print {
+    display: block;
+  }
 `
 
 export const StageDisplay = styled.div`
@@ -19,6 +23,13 @@ export const StageDisplay = styled.div`
   justify-content: center;
   min-height: 0;
   width: 100%;
+
+  /* A size container with no height to measure resolves every cqh to zero, which on
+     paper left the clock at its floor and half off the top edge. */
+  @media print {
+    display: block;
+    container-type: normal;
+  }
   /* Makes the stage a query container, so the time can be sized against the height it
      actually has rather than against the viewport. Every cqh and cqw below resolves
      against this element. */
@@ -27,7 +38,11 @@ export const StageDisplay = styled.div`
 
 export const Clock = styled.p`
   margin: 0;
-  font-size: clamp(3rem, min(22vw, 34cqh), 13rem);
+  /* Sized against the container rather than the window. 22vw ignored the shell's own
+     padding, so "99:59:59" — the longest duration the app will hold — was laid out
+     391px wide inside a 390px phone and had its outer strokes clipped away. Tuned against
+     the widest case the app can produce: "99:59:59" in Rain's monospace face. */
+  font-size: clamp(3rem, min(20cqw, 34cqh), 13rem);
   line-height: 1;
   /* Digits of unequal width make a running clock jitter. */
   font-variant-numeric: tabular-nums;
@@ -62,6 +77,17 @@ export const Display = styled.div<{ $done?: boolean }>`
       animation: none;
     }
   }
+
+  /* On paper the ink is black, whatever the scene it was chosen against, and the type
+     is set in points rather than in a share of a window that is not there. */
+  @media print {
+    color: #000;
+
+    ${Clock} {
+      font-size: 96pt;
+      animation: none;
+    }
+  }
 `
 
 export const Label = styled.p`
@@ -79,6 +105,18 @@ export const Label = styled.p`
   white-space: nowrap;
 `
 
+/** Date mode with no target. Set in the theme's own display face so the screen still
+ *  reads as this app's, but quiet, and nowhere near the size a real count would be —
+ *  it is a state, not a value. */
+export const Prompt = styled.p`
+  margin: 0;
+  font-size: clamp(1.5rem, min(7cqw, 12cqh), 3.25rem);
+  line-height: 1.1;
+  color: var(--dim);
+  text-align: center;
+  user-select: none;
+`
+
 export const Segments = styled.div`
   display: flex;
   align-items: flex-start;
@@ -93,10 +131,16 @@ export const Segment = styled.div`
 `
 
 export const SegmentValue = styled.span`
-  font-size: clamp(2rem, min(14vw, 24cqh), 7rem);
+  /* Container-relative for the same reason as the clock: a days segment can put four
+     numbers and three gaps on one line. */
+  font-size: clamp(2rem, min(8.5cqw, 24cqh), 7rem);
   line-height: 1;
   font-variant-numeric: tabular-nums;
   user-select: none;
+
+  @media print {
+    font-size: 56pt;
+  }
 `
 
 export const SegmentUnit = styled.span`

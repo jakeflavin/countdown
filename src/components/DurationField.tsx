@@ -1,5 +1,5 @@
 import { clampDuration, DAY, partsToMs, splitParts } from '@/lib/duration'
-import { Chip, GroupField, Hint } from './drawer.styled'
+import { Chip, GroupField, Hint, Presets } from './drawer.styled'
 import { presets } from '@/lib/presets'
 
 type DurationFieldProps = {
@@ -46,17 +46,19 @@ export function DurationField({ ms, onChange }: DurationFieldProps) {
         ))}
       </GroupField>
 
-      <GroupField $wrap>
-        {presets.map((preset) => (
-          <Chip
-            key={preset.label}
-            $active={preset.ms === ms}
-            onClick={() => onChange(preset.ms)}
-            aria-pressed={preset.ms === ms}
-          >
-            {preset.label}
-          </Chip>
-        ))}
+      <GroupField>
+        <Presets>
+          {presets.map((preset) => (
+            <Chip
+              key={preset.label}
+              $active={preset.ms === ms}
+              onClick={() => onChange(preset.ms)}
+              aria-pressed={preset.ms === ms}
+            >
+              {preset.label}
+            </Chip>
+          ))}
+        </Presets>
       </GroupField>
 
       {ms >= DAY && (

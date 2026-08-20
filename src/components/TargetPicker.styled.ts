@@ -1,7 +1,9 @@
 import { styled } from 'styled-components'
 
+import { hitArea } from './buttons.styled'
+
 export const Calendar = styled.div`
-  padding: 10px 12px 12px;
+  padding: 10px 8px 12px;
 `
 
 export const CalendarHead = styled.div`
@@ -22,6 +24,7 @@ export const Month = styled.span`
  * than carrying a surface of its own, since it already sits on the card.
  */
 export const CalendarNav = styled.button`
+  ${hitArea}
   display: grid;
   flex: 0 0 auto;
   place-items: center;
@@ -47,10 +50,6 @@ export const CalendarNav = styled.button`
     transform: scale(0.94);
   }
 
-  &:focus-visible {
-    outline: 2px solid var(--text);
-    outline-offset: 1px;
-  }
 `
 
 export const Grid = styled.div`
@@ -69,9 +68,10 @@ export const Weekday = styled.span`
 `
 
 export const Day = styled.button<{ $today?: boolean; $selected?: boolean }>`
-  aspect-ratio: 1;
-  /* Comfortably tappable at the drawer's width without the grid outgrowing it. */
-  min-height: 34px;
+  /* Seven columns inside a 360px drawer cannot also be 44px wide, so the height carries
+     what the width cannot. Square looked tidier and was 39×39 — five short in both
+     directions, on the one screen in the app that is nothing but small targets. */
+  min-height: 44px;
   padding: 0;
   font: inherit;
   font-size: 13px;
@@ -114,21 +114,25 @@ export const TimeRow = styled.div`
 `
 
 export const TimeSelect = styled.select`
-  padding: 6px 4px 6px 8px;
+  min-height: 44px;
+  /* Room on the right for the caret drawn below. */
+  padding: 6px 22px 6px 10px;
   font: inherit;
-  font-size: 14px;
+  /* 16px for the same reason the text inputs are: anything less and iOS zooms. */
+  font-size: 16px;
   font-variant-numeric: tabular-nums;
   color: var(--text);
   appearance: none;
-  background: transparent;
+  /* A select with its appearance stripped and nothing put back looks exactly like the
+     read-only value it sits beside. The caret is what says this one opens. */
+  background:
+    linear-gradient(45deg, transparent 50%, currentColor 50%) calc(100% - 13px) 50% / 5px 5px
+      no-repeat,
+    linear-gradient(135deg, currentColor 50%, transparent 50%) calc(100% - 8px) 50% / 5px 5px
+      no-repeat;
   border: 1px solid var(--line);
   border-radius: 8px;
   cursor: pointer;
-
-  &:focus-visible {
-    outline: 2px solid var(--text);
-    outline-offset: 1px;
-  }
 
   /* The popup list is drawn by the OS, so its options need a readable background of
      their own rather than the drawer's translucent surface. */

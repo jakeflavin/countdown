@@ -3,6 +3,11 @@
  * sibling app Roll ships as its themes: each is a background with text, muted, surface
  * and border colours already proven to read against it, so a custom theme built from
  * one is legible without anybody having to tune it.
+ *
+ * The muted alphas are this app's own, not Roll's. A single alpha cannot serve both
+ * halves of the set: it sinks a light ink toward a dark ground but lifts a dark ink
+ * toward a light one, so the three light palettes carry a heavier one to reach the same
+ * 4.5:1 their dark siblings get for free.
  */
 export type Gradient = {
   id: string
@@ -69,7 +74,7 @@ export const gradients: [Gradient, ...Gradient[]] = [
       'linear-gradient(155deg, #ffb27a 0%, #f4739a 50%, #8e3c93 100%)',
     base: '#f4739a',
     text: '#3a1024',
-    muted: 'rgba(58, 16, 36, 0.62)',
+    muted: 'rgba(58, 16, 36, 0.72)',
     surface: 'rgba(255, 244, 238, 0.86)',
     border: 'rgba(58, 16, 36, 0.16)',
     displayFont: '"Inter", system-ui, sans-serif',
@@ -86,7 +91,7 @@ export const gradients: [Gradient, ...Gradient[]] = [
       'linear-gradient(150deg, #eef7f2 0%, #e2eef8 55%, #f7f1e8 100%)',
     base: '#e2eef8',
     text: '#17332c',
-    muted: 'rgba(23, 51, 44, 0.55)',
+    muted: 'rgba(23, 51, 44, 0.72)',
     surface: 'rgba(255, 255, 255, 0.88)',
     border: 'rgba(23, 51, 44, 0.14)',
     displayFont: '"Instrument Serif", Georgia, serif',
@@ -120,7 +125,7 @@ export const gradients: [Gradient, ...Gradient[]] = [
       'linear-gradient(150deg, #fdeef6 0%, #f0eaff 55%, #fff6ea 100%)',
     base: '#f0eaff',
     text: '#43254a',
-    muted: 'rgba(67, 37, 74, 0.55)',
+    muted: 'rgba(67, 37, 74, 0.72)',
     surface: 'rgba(255, 255, 255, 0.85)',
     border: 'rgba(67, 37, 74, 0.14)',
     displayFont: '"Instrument Serif", Georgia, serif',
