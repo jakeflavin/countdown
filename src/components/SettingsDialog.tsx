@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Keys, Shortcuts } from './SessionDialog.styled'
+import { Keys, ShortcutScope, Shortcuts } from './SessionDialog.styled'
 import {
   ThemeDescription,
   ThemeGrid,
@@ -29,6 +29,7 @@ import { CUSTOM_THEME_ID, scenePoster, themes } from '@/lib/themes'
 import { gradientById } from '@/lib/gradients'
 import type { CustomImage } from '@/lib/customBackground'
 import { modes, type Settings } from '@/hooks/useSettings'
+import { useOrientation } from '@/hooks/useOrientation'
 import { BackupControls } from './BackupControls'
 import { DurationField } from './DurationField'
 import { TargetPicker } from './TargetPicker'
@@ -67,6 +68,10 @@ export function SettingsDialog({
 }: SettingsDialogProps) {
   const ref = useRef<HTMLDialogElement>(null)
   const [page, setPage] = useState<'main' | 'shortcuts'>('main')
+  // The swatch is a crop of the same poster the backdrop uses, so it should be the crop
+  // this device is already holding. Asking for landscape on an upright phone fetched all
+  // seven wide files — 778KB — to fill eight boxes 62 pixels tall.
+  const orientation = useOrientation()
   // Touch devices get no shortcut list; there is nothing to press.
   const hasKeyboard = typeof window !== 'undefined' && window.matchMedia('(pointer: fine)').matches
 
@@ -110,7 +115,12 @@ export function SettingsDialog({
           <Shortcuts>
             {shortcuts.map((shortcut) => (
               <li key={shortcut.label}>
-                <span>{shortcut.label}</span>
+                <span>
+                  {shortcut.label}
+                  {/* A key that does nothing in the mode you are in should say so, rather
+                      than being pressed twice and then given up on. */}
+                  {shortcut.mode && <ShortcutScope>duration only</ShortcutScope>}
+                </span>
                 <Keys>
                   {shortcut.keys.map((key) => (
                     <kbd key={key}>{key}</kbd>
@@ -201,7 +211,12 @@ export function SettingsDialog({
                   <ThemeSwatch
                     style={{
                       backgroundColor: t.base,
-                      backgroundImage: `url(${scenePoster(t.id, 'landscape')})`,
+                      // The scene's own wash goes over the poster here for the same reason
+                      // it does on the real screen: without it the preview of a bright
+                      // scene shows white digits on white sky, which is exactly what the
+                      // scrim exists to prevent — and a preview that lies is worse than
+                      // no preview.
+                      backgroundImage: `${t.scrim}, url(${scenePoster(t.id, orientation)})`,
                       borderColor: t.border,
                     }}
                   >

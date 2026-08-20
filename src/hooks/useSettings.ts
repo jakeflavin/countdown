@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState, type Dispatch, type SetStateAction } from 'react'
 import { clampDuration, MINUTE } from '@/lib/duration'
 import { defaultGradient, gradients } from '@/lib/gradients'
 import { defaultTheme, type CustomKind } from '@/lib/themes'
-import { readInitialSettings } from '@/lib/shareUrl'
+import { hasShareParams, readInitialSettings } from '@/lib/shareUrl'
 
 /** What the app is counting: a duration you start, or a moment on the calendar. */
 export type Mode = 'duration' | 'date'
@@ -73,12 +73,31 @@ export function migrate(stored: Partial<Settings>): Settings {
 }
 
 export function useSettings() {
-  // A shared link's options win over what this browser had stored.
+  // A shared link's options win over what this browser had stored, for this visit.
   const [settings, setSettings] = useState<Settings>(() => readInitialSettings(load()))
 
-  useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(settings))
-  }, [settings])
+  /*
+   * A link describes someone else's countdown, so following one is a visit rather than a
+   * change of mind. Writing its options straight to storage overwrote whatever this
+   * browser already had and never gave it back: a link carrying `sound=0` left the
+   * recipient's chime off on every later visit, silently and with nothing to undo.
+   *
+   * So a link-borne state is held in memory only. The first setting the visitor actually
+   * changes is the point they made it theirs, and from there it saves as it always did.
+   */
+  const [borrowed, setBorrowed] = useState(
+    () => hasShareParams(new URLSearchParams(window.location.search)),
+  )
 
-  return [settings, setSettings] as const
+  useEffect(() => {
+    if (borrowed) return
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(settings))
+  }, [settings, borrowed])
+
+  const change: Dispatch<SetStateAction<Settings>> = useCallback((next) => {
+    setBorrowed(false)
+    setSettings(next)
+  }, [])
+
+  return [settings, change] as const
 }

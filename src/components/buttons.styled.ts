@@ -53,9 +53,29 @@ export const PrimaryButton = styled.button`
   }
 `
 
+/**
+ * Grows what a finger can hit to the 44px minimum without changing a pixel of what is
+ * drawn. Several controls here are sized by their design — a 30px calendar arrow, a 26px
+ * switch — and scaling them up to meet a thumb would cost the thing that made them right.
+ */
+export const hitArea = css`
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: max(100%, 44px);
+    height: max(100%, 44px);
+    transform: translate(-50%, -50%);
+  }
+`
+
 /** Same surface, border and blur as the primary button, just round instead of a pill. */
 export const IconButton = styled.button<{ $quiet?: boolean }>`
   ${glass}
+  ${hitArea}
   display: grid;
   place-items: center;
   width: 40px;

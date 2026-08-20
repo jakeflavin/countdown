@@ -13,7 +13,8 @@ type CountdownProps = {
   mode: Mode
   /** Time left, or time since a target that has passed. */
   ms: number
-  past?: boolean
+  /** Date mode with no target yet, which is not the same thing as a span of zero. */
+  unset?: boolean
   label?: string
   done?: boolean
   theme: Theme
@@ -46,7 +47,7 @@ function actionLabel(status: TimerStatus) {
 export function Countdown({
   mode,
   ms,
-  past,
+  unset,
   label,
   done,
   theme,
@@ -85,7 +86,7 @@ export function Countdown({
   return (
     <Stage>
       <StageDisplay>
-        <TimeDisplay mode={mode} ms={ms} past={past} label={label} done={done} theme={theme} />
+        <TimeDisplay mode={mode} ms={ms} unset={unset} label={label} done={done} theme={theme} />
       </StageDisplay>
 
       {/* Opposite corners: the secondary controls to one side, the primary button to

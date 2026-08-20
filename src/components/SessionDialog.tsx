@@ -1,6 +1,6 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { DayGroup, DayLabel, RunMeta, RunValue, Runs } from './SessionDialog.styled'
-import { Drawer, DrawerHeader, Hint, LinkButton, OptionsCount } from './drawer.styled'
+import { Confirm, ConfirmRow, Drawer, DrawerHeader, Hint, LinkButton, OptionsCount } from './drawer.styled'
 import { IconButton } from './buttons.styled'
 import { X } from 'lucide-react'
 import { formatSpan } from '@/lib/duration'
@@ -15,12 +15,17 @@ type SessionDialogProps = {
 
 export function SessionDialog({ open, onClose, session, onClear }: SessionDialogProps) {
   const ref = useRef<HTMLDialogElement>(null)
+  // Clearing is irreversible and nothing else keeps a copy, so it asks once. Held here
+  // rather than in the button so that closing the drawer disarms it — coming back to a
+  // history already primed for deletion would be its own kind of trap.
+  const [confirming, setConfirming] = useState(false)
 
   useEffect(() => {
     const el = ref.current
     if (!el) return
     if (open && !el.open) el.showModal()
     if (!open && el.open) el.close()
+    if (!open) setConfirming(false)
   }, [open])
 
   // Backdrop clicks are dispatched on the dialog itself, so a hit test against its box
@@ -85,10 +90,29 @@ export function SessionDialog({ open, onClose, session, onClear }: SessionDialog
           ))}
 
           {/* Quiet by default: it destroys the history, so it should not compete with
-              reading the list. */}
-          <LinkButton $danger onClick={onClear}>
-            Clear history
-          </LinkButton>
+              reading the list. Quiet, though, is a statement about weight — not a reason
+              to let one stray click take a fortnight of runs with nothing to undo. */}
+          {confirming ? (
+            <ConfirmRow>
+              <span>
+                Clear {session.entries.length}{' '}
+                {session.entries.length === 1 ? 'run' : 'runs'}?
+              </span>
+              <LinkButton onClick={() => setConfirming(false)}>Keep</LinkButton>
+              <Confirm
+                onClick={() => {
+                  onClear()
+                  setConfirming(false)
+                }}
+              >
+                Clear
+              </Confirm>
+            </ConfirmRow>
+          ) : (
+            <LinkButton $danger onClick={() => setConfirming(true)}>
+              Clear history
+            </LinkButton>
+          )}
         </>
       )}
     </Drawer>

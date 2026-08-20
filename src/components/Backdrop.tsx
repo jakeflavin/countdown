@@ -4,29 +4,9 @@ import {
   scenePoster,
   sceneVideo,
   type Backdrop as BackdropChoice,
-  type Orientation,
   type Theme,
 } from '@/lib/themes'
-
-/** The clip that fits the screen it is on: a phone held upright gets a scene framed for
- *  it, rather than the middle of a wide one blown up. */
-function useOrientation(): Orientation {
-  const [orientation, setOrientation] = useState<Orientation>(() =>
-    typeof window === 'undefined' || window.innerWidth >= window.innerHeight
-      ? 'landscape'
-      : 'portrait',
-  )
-
-  useEffect(() => {
-    const query = window.matchMedia('(orientation: portrait)')
-    const apply = () => setOrientation(query.matches ? 'portrait' : 'landscape')
-    apply()
-    query.addEventListener('change', apply)
-    return () => query.removeEventListener('change', apply)
-  }, [])
-
-  return orientation
-}
+import { useOrientation } from '@/hooks/useOrientation'
 
 /** Motion behind a timer is exactly what this asks to be spared, so the scene holds on
  *  its own first frame instead. */

@@ -1,11 +1,15 @@
 export type Shortcut = {
   keys: string[]
   label: string
+  /** Present when the key only does something in one mode. Starting, pausing and
+   *  resetting all act on a run, and a date has no run to act on — the list said
+   *  otherwise and left people pressing Space at a calendar. */
+  mode?: 'duration'
 }
 
 export const shortcuts: Shortcut[] = [
-  { keys: ['Space', 'Enter'], label: 'Start or pause' },
-  { keys: ['R'], label: 'Reset' },
+  { keys: ['Space', 'Enter'], label: 'Start or pause', mode: 'duration' },
+  { keys: ['R'], label: 'Reset', mode: 'duration' },
   { keys: ['M'], label: 'Switch mode' },
   { keys: ['S'], label: 'Open settings' },
   { keys: ['H'], label: 'Open history' },

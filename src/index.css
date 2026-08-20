@@ -27,6 +27,18 @@ body,
   overflow: hidden;
 }
 
+/*
+ * One focus ring for the whole app. It belongs to the reset for the same reason the box
+ * model does: it replaces a UA default, and it has to hold everywhere rather than in the
+ * three components that happened to declare one. Before this, inputs and the calendar
+ * wore a ring in the theme's own ink while every button fell through to the browser's
+ * blue — two systems, alternating on every second Tab.
+ */
+:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 2px;
+}
+
 body {
   margin: 0;
   font-family:
@@ -39,4 +51,21 @@ body {
      color rather than white. */
   background: var(--bg);
   -webkit-font-smoothing: antialiased;
+}
+
+/*
+ * Nothing here is a document, so printing one is almost always a slip of the fingers.
+ * What comes out should at least be the time rather than a full-bleed photograph: the
+ * scene, the chrome and every control drop away, and the count is left as type on white.
+ * Each component hides itself; this only sets the ground.
+ */
+@media print {
+  html,
+  body,
+  #root {
+    height: auto;
+    overflow: visible;
+    background: #fff;
+    color: #000;
+  }
 }

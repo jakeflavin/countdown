@@ -42,6 +42,14 @@ export const Shortcuts = styled(RuledList)`
   }
 `
 
+/** Says which mode a key belongs to, for the ones that only work in one. */
+export const ShortcutScope = styled.span`
+  margin-left: 8px;
+  font-size: 11px;
+  color: var(--dim);
+  white-space: nowrap;
+`
+
 export const Keys = styled.span`
   display: flex;
   flex: 0 0 auto;
