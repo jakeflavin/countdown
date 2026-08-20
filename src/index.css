@@ -1,3 +1,17 @@
+/*
+ * The ground, and only the ground. Every other token is written onto <html> by App.tsx
+ * once the scene resolves, which happens on mount — until then an undefined --bg paints
+ * white. These are the default scene's own colours, so the first frame is Drift rather
+ * than a flash. Keep them in step with `defaultTheme` in lib/themes.ts; nothing else
+ * belongs here.
+ */
+:root {
+  color-scheme: light;
+
+  --bg: #e9dfe0;
+  --text: #22323c;
+}
+
 *,
 *::before,
 *::after {

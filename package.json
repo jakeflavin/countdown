@@ -11,7 +11,7 @@
     "build": "tsc -b && vite build",
     "icons": "node scripts/make-icons.mjs",
     "preview": "vite preview",
-    "lint": "oxlint",
+    "lint": "oxlint && node scripts/check-global-css.mjs src/index.css",
     "format": "prettier --write .",
     "typecheck": "tsc -b --noEmit",
     "test": "vitest run",
